@@ -1,0 +1,16 @@
+{
+  "name": "react-magneto",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "adm-zip": "^0.5.5",
+    "express": "^4.17.1",
+    "simple-excel-to-json": "^2.3.0"
+  }
+}
