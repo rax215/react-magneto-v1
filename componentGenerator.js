@@ -1,25 +1,23 @@
 const generateComponent = (masterLayout,components) => {
-  const name = masterLayout.componentName
-  let optList = masterLayout.componentList.filter(comp => (comp.type == 'RadioButton' || comp.type == 'DropDown'))
-  //console.log(optList)
-  let componentOptions = {}
-  optList.forEach(comp => {    
-    componentOptions[comp.attributes.id + 'Options'] = comp.attributes.options.split(',')    
-  })
-  console.log(componentOptions)
+  const name = masterLayout.Label
+  console.log(name)
+  // let optList = masterLayout.componentList.filter(comp => (comp.type == 'RadioButton' || comp.type == 'DropDown'))
+  // //console.log(optList)
+  // let componentOptions = {}
+  // optList.forEach(comp => {    
+  //   componentOptions[comp.attributes.id + 'Options'] = comp.attributes.options.split(',')    
+  // })
+  // console.log(componentOptions)
    const jsxCode = `import { ${[...new Set(components.map((comp) => comp.compName))].join(', ')} } from '@material-ui/core'
      
-   let componentOptions = ${JSON.stringify(componentOptions)}
-
-const ${name} = () => {
+const Employee = () => {
   return (
     <div>            
       ${components.map((comp) => `${comp.jsx}`).join('\n')}
     </div>
   )
 }
-
-export default ${name}`     
+export default Employee`     
     
   return jsxCode
 }

@@ -19,9 +19,10 @@ const readExcelFile = () => {
     var data = parser.parseXls2Json(filePath, {
     isNested: true,
     });
+
     // selecting the sheet
     const materialUiSheet = data[0];
-    let masterLayout = CommonUtil.createMasterLayout(materialUiSheet)    
+    let masterLayout = CommonUtil.createMasterLayout(materialUiSheet)
     return masterLayout
 }
 
@@ -30,24 +31,28 @@ const reactGenerator = async() => {
         const directory = './output/';           
         fs.mkdir(directory, (err) => {
             if(err) {
-                console.log('error while creating project directory')
+                console.log('error while creating project directory -1')
             } else {
     
         const masterLayout = readExcelFile()
         
-        projName = masterLayout.componentName
+        projName = masterLayout.name
         
         fs.mkdir(`./output/${projName}`, (err) => {
             if(err) {
-                console.log('error while creating project directory')
+                console.log('error while creating project directory -2')
             } else {
                 console.log('project directory created')
                 const dirName = __dirname
                 fs.mkdir(`./output/${projName}/src`, (err) => {
                     if(err) {
-                        console.log('error while creating src directory')
+                        console.log('error while creating src directory -3')
                     } else {
-                        console.log('src directory created')                        
+                        console.log('src directory created')     
+                        
+                        fs.copyFile(`${dirName}/template/App.css`,`./output/${projName}/src/App.css`, err => {
+                            if (err) throw err 
+                        })
                                             
                         fs.copyFile(`${dirName}/template/App.js`,`./output/${projName}/src/App.js`, err => {
                             if (err) throw err 
@@ -63,7 +68,7 @@ const reactGenerator = async() => {
     
                         fs.mkdir(`./output/${projName}/public`, (err) => {
                             if(err) {
-                                console.log('error while creating src directory')
+                                console.log('error while creating src directory -4')
                             } else {
                                 console.log('public directory created')
                                 fs.copyFile(`${dirName}/template/index.html`,`./output/${projName}/public/index.html`, err => {
@@ -97,9 +102,9 @@ const reactGenerator = async() => {
                         //     if (err) throw err 
                         // })
             
-                        fs.copyFile(`${dirName}/template/.gitignore`,`./output/${projName}/.gitignore`, err => {
-                            if (err) throw err 
-                        })
+                        // fs.copyFile(`${dirName}/template/.gitignore`,`./output/${projName}/.gitignore`, err => {
+                        //     if (err) throw err 
+                        // })
 
                         
                     }

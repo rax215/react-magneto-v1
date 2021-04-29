@@ -1,12 +1,20 @@
+
 const getDropDown = (attributes) => {
     
+    let lebels = attributes.options
+    let lebelName = lebels.split(',')
     return (
-       ` <TextField id="${attributes.id}" label="${attributes.label}" required="${attributes.mandatory}" value="None" select>
-        {componentOptions.${attributes.id}Options.map(item =>
-            <MenuItem key={item.value} {...item} />        
-        )}
-        </TextField> 
-        `    
+    `   <Paper variant="outlined" className="wrapper">
+            <Grid item xs>
+                <InputLabel htmlFor="select" className="formlabel" >${attributes.label}</InputLabel>
+                    <NativeSelect id="select">
+                    ${lebelName.map(
+                        lebelName => `          <option value="${lebelName}">${lebelName}</option>`
+                    ).join("\n")}
+                    </NativeSelect>
+            </Grid>
+        </Paper>
+    `    
     )
 }
 

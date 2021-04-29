@@ -1,8 +1,8 @@
 const getTextField = (attributes) => { 
     return (
-    `
-            <TextField id="${attributes.id}" label="${attributes.label}" className="${attributes.className}" variant="outlined" />
-    `    
+    `<Grid className="wrapper" variant="outlined">       
+        <TextField id="${attributes.id}" label="${attributes.label}" className="formlabel" variant="outlined" />
+    </Grid>`    
     )
 }
 
