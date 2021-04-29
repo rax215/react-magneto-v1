@@ -1,7 +1,6 @@
-const getFormLebel = (attributes) => { 
-    return (
-    `<FormLabel component="${attributes.radioButtonName}">${attributes.radioButtonName}</FormLabel>`    
-    )
-}
+const getFormLebel = (attributes) => {
+  return `   <FormLabel className="formlabel">${attributes.label}</FormLabel>
+    `;
+};
 
-module.exports = {getFormLebel}
+module.exports = { getFormLebel };

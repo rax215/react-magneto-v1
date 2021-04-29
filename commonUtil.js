@@ -19,9 +19,8 @@ const createComponentLayout = obj => {
 
 const createMasterLayout = (compArr) => {
     let masterLayout = {}
-    masterComp = createComponentLayout(compArr[0])    
-    masterLayout.componentName = masterComp.attributes.name
-    masterLayout.layout = masterComp.attributes.layout
+    masterLayout.componentName = compArr[0].value
+    masterLayout.layout = compArr[1].value
     let layoutCompList = []
     let componentList = compArr.splice(2)
     componentList.forEach(obj => {

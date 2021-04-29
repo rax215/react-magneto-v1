@@ -1,6 +1,6 @@
 const getTextContainer = (attributes) => { 
     return (
-        `<Container fixed/>
+        `<h2>${attributes.label}</h2>
         `    
     )
 }
