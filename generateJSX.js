@@ -10,7 +10,9 @@ const generateJSX = async(masterLayout) => {
 
     return new Promise ((resolve, reject) => {       
 
-        let componentData = []; 
+        let componentData = [];
+        componentData.push({"compName" : "Grid","jsx" : ""})
+        componentData.push({"compName" : "Paper","jsx" : ""}) 
         masterLayout.componentList.forEach(component => {
           if(component.type === 'TextInput') {
             componentData.push({"compName" : "TextField","jsx" : ComponentLibrary.textInputComponent(component.attributes)})
@@ -22,8 +24,10 @@ const generateJSX = async(masterLayout) => {
             componentData.push({"compName" : "Radio","jsx" : ""})
           }
           else if(component.type === 'DropDown') {
-            componentData.push({"compName" : "InputLabel","jsx" : ComponentLibrary.dropDownComponent(component.attributes)})
-            componentData.push({"compName" : "NativeSelect","jsx" : ""})
+            componentData.push({"compName" : "Select","jsx" : ComponentLibrary.dropDownComponent(component.attributes)})
+            componentData.push({"compName" : "MenuItem","jsx" : ""})
+            componentData.push({"compName" : "InputLabel","jsx" : ""})
+            componentData.push({"compName" : "FormControl","jsx" : ""})
           }
           else if(component.type === 'CheckBox') {
             componentData.push({"compName" : "Checkbox","jsx" : ComponentLibrary.checkBoxComponent(component.attributes)})
@@ -42,9 +46,12 @@ const generateJSX = async(masterLayout) => {
             componentData.push({"compName" : "TableHead","jsx" : ""});
             componentData.push({"compName" : "TableRow","jsx" : ""});
           }
+          else if(component.type === 'Chart') {
+            componentData.push({"compName" : "Container","jsx" : ComponentLibrary.chartComponent(component.attributes)});
+          }
         })
 
-       const jsxFile = generateComponent(masterLayout.componentName,componentData)
+       const jsxFile = generateComponent(masterLayout,componentData)
        resolve(jsxFile)
     })
 }

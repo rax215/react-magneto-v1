@@ -36,7 +36,7 @@ const reactGenerator = async() => {
     
         const masterLayout = readExcelFile()
         
-        projName = masterLayout.name
+        projName = masterLayout.componentName
         
         fs.mkdir(`./output/${projName}`, (err) => {
             if(err) {
