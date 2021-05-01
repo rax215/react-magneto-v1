@@ -1,9 +1,7 @@
-const getTextField = (attributes) => { 
-    return (
-    `<Grid className="wrapper" variant="outlined">       
+const getTextField = (attributes) => {
+  return `<Grid className="wrapper" variant="outlined">       
         <TextField id="${attributes.id}" label="${attributes.label}" className="formlabel" variant="outlined" />
-    </Grid>`    
-    )
-}
+    </Grid>`;
+};
 
-module.exports = {getTextField}
+module.exports = { getTextField };

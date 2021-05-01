@@ -1,5 +1,5 @@
 const getFormLebel = (attributes) => {
-  return `   <FormLabel className="formlabel">${attributes.label}</FormLabel>
+  return `   <FormLabel className="formlabel" required="${attributes.mandatory}">${attributes.label}</FormLabel>
     `;
 };
 
