@@ -4,8 +4,7 @@ const getDropDown = (attributes) => {
     let lebels = attributes.options
     let lebelName = lebels.split(',')
     return (
-    `   <Paper variant="outlined" className="wrapper">
-            <FormControl style={{minWidth:135}}> 
+        ` <Grid item lg={4} className="wrapper">
                 <InputLabel id="${attributes.id}Label" required={${attributes.mandatory}}> ${attributes.label} </InputLabel>
                 <Select id="${attributes.id}" value={values.${attributes.id}}>
                     <MenuItem value="">
@@ -15,9 +14,8 @@ const getDropDown = (attributes) => {
                         <MenuItem key={item} value={item}>{item}</MenuItem>        
                     )}
                 </Select>
-            </FormControl>
-        </Paper>
-    `    
+           </Grid>
+    `
     )
 }
 

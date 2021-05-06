@@ -37,6 +37,7 @@ const generateComponent = (masterLayout, components) => {
        `;
     });
     jsxCode = `import {useState} from 'react';
+    import './App.css';
     import { ${[
       ...new Set(chartCmpList.map((comp) => comp.attributes.type)),
     ].join(", ")} } from 'react-chartjs-2';\n`;
@@ -54,8 +55,20 @@ const generateComponent = (masterLayout, components) => {
   let initialValues = ${JSON.stringify(initialValues)}
   const [values, setValues] = useState({initialValues});
   return (
-    <div>            
-      ${components.map((comp) => `${comp.jsx}`).join("\n")}
+    <div> 
+      <Container maxWidth="lg"> 
+      <Paper variant="outlined"> 
+      <Grid container className="wrapper"> 
+      <Grid container item lg={11} spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center">
+      <h1>Customer Info  </h1>  
+      </Grid>  
+        ${components.map((comp) => `${comp.jsx}`).join("\n")}
+      </Grid>
+      </Paper>
+      </Container>
     </div>
   )
 }
