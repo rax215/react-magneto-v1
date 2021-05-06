@@ -1,18 +1,15 @@
 const FormLabel = require("../FormLabel/FormLabel");
 
 const getCheckBox = (attributes) => {
-  return `<Paper variant="outlined" className="wrapper">
-            <Grid item xs>
+  return `<Grid item lg={4} className="wrapper">
             ${FormLabel.getFormLebel(attributes)}                   
                     <FormGroup>
-                        {componentOptions.${
-                          attributes.id
-                        }Options.map((item) => (
+                        {componentOptions.${attributes.id
+    }Options.map((item) => (
                             <FormControlLabel control={<Checkbox name={item} />} label={item} />
                             ))}
                     </FormGroup>
-            </Grid>  
-        </Paper>
+            </Grid>
     `;
 };
 
