@@ -9,9 +9,12 @@ const generateComponent = (masterLayout, components) => {
   let chartCmpList = masterLayout.componentList.filter(
     (comp) => comp.type == "Chart"
   );
+  let tableCmpList = masterLayout.componentList.filter(
+    (comp) => comp.type == "Table"
+  );
   let componentOptions = {},
     initialValues = {},
-    chartData = "";
+    chartData = "", tableData='';
   optList.forEach((comp) => {
     initialValues[comp.attributes.id] = "";
     componentOptions[
@@ -22,6 +25,14 @@ const generateComponent = (masterLayout, components) => {
   const materialComponents = components.filter(
     (comp) => comp.compName !== "Chart"
   );
+  if(tableCmpList && tableCmpList.length > 0) {
+    tableCmpList.forEach((comp) => {
+      tableData =tableData +
+        `let ${comp.attributes.id}Columns = JSON.parse(${JSON.stringify(comp.attributes.columns)})
+      let ${comp.attributes.id}Rows = JSON.parse(${JSON.stringify(comp.attributes.rows)})
+       `;
+    });  
+  }
   let jsxCode = "";
   if (chartCmpList && chartCmpList.length > 0) {
     chartCmpList.forEach((comp) => {
@@ -49,7 +60,8 @@ const generateComponent = (masterLayout, components) => {
       ...new Set(materialComponents.map((comp) => comp.compName)),
     ].join(", ")} } from '@material-ui/core'
    let componentOptions = ${JSON.stringify(componentOptions)} 
-   ${chartData} 
+   ${chartData}
+   ${tableData}  
 
  const ${name} = () => {
   let initialValues = ${JSON.stringify(initialValues)}
