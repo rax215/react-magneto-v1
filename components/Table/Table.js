@@ -7,7 +7,7 @@ const getTable = (attributes) => {
     <TableHead>
       <TableRow>
       {${attributes.id}Columns.map((column) => (
-            <TableCell key={column.id}>
+            <TableCell key={column.field}>
               {column.label}
             </TableCell>
           ))}
@@ -18,9 +18,9 @@ const getTable = (attributes) => {
           return (
             <TableRow key={row.id}>
               {${attributes.id}Columns.map((column) => {
-                const value = row[column.id];
+                const value = row[column.field];
                 return (
-                  <TableCell key={column.id} >
+                  <TableCell key={column.field} >
                     {value}
                   </TableCell>
                 );
