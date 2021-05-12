@@ -47,15 +47,13 @@ const generateComponent = (masterLayout, components) => {
         )})
        `;
     });
-    jsxCode = `import {useState} from 'react';
-    import { ${[
-      ...new Set(chartCmpList.map((comp) => comp.attributes.type)),
-    ].join(", ")} } from 'react-chartjs-2';\n`;
+    jsxCode = `import { ${[...new Set(chartCmpList.map((comp) => comp.attributes.type)),].join(", ")} } from 'react-chartjs-2';\n`;
   }
 
   jsxCode =
     jsxCode +
-    `import { ${[
+    `import {useState} from 'react';
+    import { ${[
       ...new Set(materialComponents.map((comp) => comp.compName)),
     ].join(", ")} } from '@material-ui/core'
     import './App.css';

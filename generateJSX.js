@@ -13,6 +13,7 @@ const generateJSX = async(masterLayout) => {
         let componentData = [];
         componentData.push({"compName" : "Grid","jsx" : ""})
         componentData.push({"compName" : "Paper","jsx" : ""}) 
+        componentData.push({"compName" : "Container","jsx" : ""})
         masterLayout.componentList.forEach(component => {
           if(component.type === 'TextInput') {
             componentData.push({"compName" : "TextField","jsx" : ComponentLibrary.textInputComponent(component.attributes)})
