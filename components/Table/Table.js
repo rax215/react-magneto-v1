@@ -1,37 +1,26 @@
-const getTable = (attributes) => { 
-
-  let stickyHeader = attributes.stickyHeader ?'stickyHeader' : ''
-  return (
-  `<TableContainer style={{maxHeight: 440}}>
-  <Table ${stickyHeader} >
+const getTable = (attributes) => {
+  return `<TableContainer style={{maxHeight: 440}}>
+  <Table ${attributes.stickyHeader ? 'stickyHeader' : ''} >
     <TableHead>
       <TableRow>
-      {${attributes.id}Columns.map((column) => (
-            <TableCell key={column.field}>
-              {column.label}
-            </TableCell>
-          ))}
+      {tableColumns.length > 0 &&
+        tableColumns.map((column) => (
+          <TableCell key={column.field}>{column.label}</TableCell>
+        ))}
       </TableRow>
     </TableHead>
     <TableBody>
-    {${attributes.id}Rows.map((row) => {
-          return (
-            <TableRow key={row.id}>
-              {${attributes.id}Columns.map((column) => {
-                const value = row[column.field];
-                return (
-                  <TableCell key={column.field} >
-                    {value}
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-          );
-        })}
+    {tableRows.length > 0 &&
+      tableRows.map((row) => (
+        <TableRow key={row.id}>
+          {Object.values(row).map((objValue) => (
+            <TableCell key={objValue}>{objValue}</TableCell>
+          ))}
+        </TableRow>
+      ))}
     </TableBody>
   </Table>
-</TableContainer> `    
-  )
-}
+</TableContainer> `;
+};
 
-module.exports = {getTable}
+module.exports = { getTable };

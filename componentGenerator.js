@@ -1,69 +1,64 @@
 const generateComponent = (masterLayout, components) => {
   const name = masterLayout.componentName;
   let optList = masterLayout.componentList.filter(
-    (comp) =>
-      comp.type == "RadioButton" ||
-      comp.type == "DropDown" ||
-      comp.type == "CheckBox"
+    (comp) => comp.type == 'RadioButton' || comp.type == 'DropDown' || comp.type == 'CheckBox'
   );
-  let chartCmpList = masterLayout.componentList.filter(
-    (comp) => comp.type == "Chart"
-  );
-  let tableCmpList = masterLayout.componentList.filter(
-    (comp) => comp.type == "Table"
-  );
+
+  let chartCmpList = masterLayout.componentList.filter((comp) => comp.type == 'Chart');
+  let tableDataApi = masterLayout.componentList.filter((comp) => comp.type == 'Table');
+
   let componentOptions = {},
     initialValues = {},
-    chartData = "", tableData='';
+    chartData = '';
+
   optList.forEach((comp) => {
-    initialValues[comp.attributes.id] = "";
-    componentOptions[
-      comp.attributes.id + "Options"
-    ] = comp.attributes.options.split(",");
+    initialValues[comp.attributes.id] = '';
+    componentOptions[comp.attributes.id + 'Options'] = comp.attributes.options.split(',');
   });
+
   console.log(componentOptions);
-  const materialComponents = components.filter(
-    (comp) => comp.compName !== "Chart"
-  );
-  if(tableCmpList && tableCmpList.length > 0) {
-    tableCmpList.forEach((comp) => {
-      tableData =tableData +
-        `let ${comp.attributes.id}Columns = JSON.parse(${JSON.stringify(comp.attributes.columns)})
-      let ${comp.attributes.id}Rows = JSON.parse(${JSON.stringify(comp.attributes.rows)})
-       `;
-    });  
-  }
-  let jsxCode = "";
+
+  const materialComponents = components.filter((comp) => comp.compName !== 'Chart');
+
+  let jsxCode = '';
   if (chartCmpList && chartCmpList.length > 0) {
     chartCmpList.forEach((comp) => {
-      let options = comp.attributes.options ? comp.attributes.options : "";
+      let options = comp.attributes.options ? comp.attributes.options : '';
       chartData =
         chartData +
-        `let ${comp.attributes.type}ChartData = JSON.parse(${JSON.stringify(
-          comp.attributes.data
-        )})
-      let ${comp.attributes.type}ChartOptions = JSON.parse(${JSON.stringify(
-          options
-        )})
+        `let ${comp.attributes.type}ChartData = JSON.parse(${JSON.stringify(comp.attributes.data)})
+      let ${comp.attributes.type}ChartOptions = JSON.parse(${JSON.stringify(options)})
        `;
     });
-    jsxCode = `import { ${[...new Set(chartCmpList.map((comp) => comp.attributes.type)),].join(", ")} } from 'react-chartjs-2';\n`;
+    jsxCode = `import { ${[...new Set(chartCmpList.map((comp) => comp.attributes.type))].join(
+      ', '
+    )} } from 'react-chartjs-2';\n`;
   }
 
   jsxCode =
     jsxCode +
-    `import {useState} from 'react';
-    import { ${[
-      ...new Set(materialComponents.map((comp) => comp.compName)),
-    ].join(", ")} } from '@material-ui/core'
+    `import {useState, useEffect} from 'react';
+    import { ${[...new Set(materialComponents.map((comp) => comp.compName))].join(', ')} } from '@material-ui/core'
     import './App.css';
    let componentOptions = ${JSON.stringify(componentOptions)} 
    ${chartData}
-   ${tableData}  
 
  const ${name} = () => {
   let initialValues = ${JSON.stringify(initialValues)}
   const [values, setValues] = useState({initialValues});
+  
+  const [tableColumns, setTableColumns] = useState([]);
+  const [tableRows, setTableRows] = useState([]);
+
+  useEffect(() => {
+    fetch("${tableDataApi[0].attributes.api}")
+      .then((response) => response.json())
+      .then((data) => {
+        setTableColumns(data.columns);
+        setTableRows(data.rows);
+      });
+  }, []);
+  
   return (
     <div> 
       <Container maxWidth="lg"> 
@@ -75,7 +70,7 @@ const generateComponent = (masterLayout, components) => {
       justify="center">
       <h1>Customer Info  </h1>  
       </Grid>  
-        ${components.map((comp) => `${comp.jsx}`).join("\n")}
+        ${components.map((comp) => `${comp.jsx}`).join('\n')}
       </Grid>
       </Paper>
       </Container>
