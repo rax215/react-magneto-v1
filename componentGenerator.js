@@ -47,7 +47,9 @@ const generateComponent = (masterLayout, components) => {
   let initialValues = ${JSON.stringify(initialValues)}
   const [values, setValues] = useState({initialValues});
   
-  const [tableColumns, setTableColumns] = useState([]);
+  ${
+    typeof tableDataApi[0].attributes.api !== 'undefined'
+      ? `const [tableColumns, setTableColumns] = useState([]);
   const [tableRows, setTableRows] = useState([]);
 
   useEffect(() => {
@@ -57,7 +59,9 @@ const generateComponent = (masterLayout, components) => {
         setTableColumns(data.columns);
         setTableRows(data.rows);
       });
-  }, []);
+  }, []);`
+      : ''
+  }
   
   return (
     <div> 

@@ -19,10 +19,10 @@ const createComponentLayout = (obj) => {
 
 const createMasterLayout = (compArr) => {
   let masterLayout = {};
-  masterLayout.componentName = compArr[0].value;
-  masterLayout.layout = compArr[1].value;
+  masterLayout.componentName = compArr[0].value.replace(/\s/g, '');
+  // masterLayout.layout = compArr[1].value;
   let layoutCompList = [];
-  let componentList = compArr.splice(2);
+  let componentList = compArr.splice(1);
   componentList.forEach((obj) => {
     layoutCompList.push(createComponentLayout(obj));
   });
@@ -31,7 +31,7 @@ const createMasterLayout = (compArr) => {
 };
 
 const isEmpty = (data) => {
-  if (data === "" || data === undefined || data === null) {
+  if (data === '' || data === undefined || data === null) {
     return true;
   }
   return false;
