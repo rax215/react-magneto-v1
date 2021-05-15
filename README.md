@@ -1,1 +1,1 @@
-# react-magneto-v1
+# react-magneto
