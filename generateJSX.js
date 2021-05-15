@@ -75,6 +75,10 @@ const generateJSX = async (masterLayout) => {
           compName: "Container",
           jsx: ComponentLibrary.chartComponent(component.attributes),
         });
+      }if(component.type === 'SearchField') {
+        componentData.push({compName : "OutlinedInput", jsx : ComponentLibrary.searFieldComponent(component.attributes)})
+        componentData.push({ compName: "InputAdornment", jsx: "" });
+        componentData.push({ compName: "IconButton", jsx: "" });
       }
     });
 

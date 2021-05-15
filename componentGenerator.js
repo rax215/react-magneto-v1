@@ -18,6 +18,9 @@ const generateComponent = (masterLayout, components) => {
   let dateComp = masterLayout.componentList.filter(
     (comp) => comp.type == "DatePicker"
   );
+  let searchFieldComp = masterLayout.componentList.filter(
+    (comp) => comp.type == "SearchField"
+  );
 
   let componentOptions = {},
     initialValues = {},
@@ -34,7 +37,7 @@ const generateComponent = (masterLayout, components) => {
   const materialPicker = components.filter((comp) => comp.compPickerName);
   // console.log(materialPicker);
   const materialComponents = components.filter(
-    (comp) => comp.compName !== "Chart"
+    (comp) => comp.compName && comp.compName !== "Chart"
   );
 
   //console.log(materialComponents);
@@ -78,7 +81,11 @@ const generateComponent = (masterLayout, components) => {
     ].join(", ")} } from '@material-ui/pickers';\n
     import DateFnsUtils from "@date-io/date-fns";\n`;
   }
-
+  if(searchFieldComp && searchFieldComp.length>0) {
+    jsxCode =
+    jsxCode +
+    `import SearchIcon from '@material-ui/icons/Search';\n`
+  }
   jsxCode =
     jsxCode +
     jsxDateCode +

@@ -6,6 +6,7 @@ const Container = require("./components/TextContainer/Container");
 const Table = require("./components/Table/Table");
 const Chart = require("./components/Chart/Chart");
 const DatePicker = require("./components/DatePicker/DatePicker");
+const SearchField = require("./components/TextInput/SearchField")
 
 const textInputComponent = (attributes) => TextInput.getTextField(attributes);
 const radioButtonComponent = (attributes) =>
@@ -18,6 +19,7 @@ const tableComponent = (attributes) => Table.getTable(attributes);
 const chartComponent = (attributes) => Chart.getChart(attributes);
 const datePickerComponent = (attributes) =>
   DatePicker.getDatePicker(attributes);
+  const searFieldComponent = (attributes) => SearchField.getSearchField(attributes);
 
 module.exports = {
   textInputComponent,
@@ -28,4 +30,5 @@ module.exports = {
   tableComponent,
   chartComponent,
   datePickerComponent,
+  searFieldComponent
 };
