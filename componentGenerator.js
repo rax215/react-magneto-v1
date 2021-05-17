@@ -11,9 +11,7 @@ const generateComponent = (masterLayout, components) => {
     (comp) => comp.type == "Chart"
   );
 
-  let tableCmpList = masterLayout.componentList.filter(
-    (comp) => comp.type == "Table"
-  );
+  let tableDataApi = masterLayout.componentList.filter((comp) => comp.type == 'Table');
 
   let dateComp = masterLayout.componentList.filter(
     (comp) => comp.type == "DatePicker"
@@ -24,37 +22,18 @@ const generateComponent = (masterLayout, components) => {
 
   let componentOptions = {},
     initialValues = {},
-    chartData = "",
-    tableData = "";
+    chartData = ""
 
   optList.forEach((comp) => {
     initialValues[comp.attributes.id] = "";
     componentOptions[comp.attributes.id + "Options"] =
       comp.attributes.options.split(",");
   });
-  //console.log(componentOptions);
 
   const materialPicker = components.filter((comp) => comp.compPickerName);
-  // console.log(materialPicker);
   const materialComponents = components.filter(
     (comp) => comp.compName && comp.compName !== "Chart"
   );
-
-  //console.log(materialComponents);
-
-  if (tableCmpList && tableCmpList.length > 0) {
-    tableCmpList.forEach((comp) => {
-      tableData =
-        tableData +
-        `let ${comp.attributes.id}Columns = JSON.parse(${JSON.stringify(
-          comp.attributes.columns
-        )})
-      let ${comp.attributes.id}Rows = JSON.parse(${JSON.stringify(
-          comp.attributes.rows
-        )})
-       `;
-    });
-  }
   let jsxCode = "";
 
   if (chartCmpList && chartCmpList.length > 0) {
@@ -89,18 +68,27 @@ const generateComponent = (masterLayout, components) => {
   jsxCode =
     jsxCode +
     jsxDateCode +
-    `import {useState} from 'react';
+    `import {useState, useEffect} from 'react';
     import { ${[
       ...new Set(materialComponents.map((comp) => comp.compName)),
     ].join(", ")} } from '@material-ui/core';
     import './App.css';
    let componentOptions = ${JSON.stringify(componentOptions)} 
-   ${chartData}
-   ${tableData}  
+   ${chartData}  
 
  const ${name} = () => {
   let initialValues = ${JSON.stringify(initialValues)}
   const [values, setValues] = useState({initialValues});
+  const [tableColumns, setTableColumns] = useState([]);
+  const [tableRows, setTableRows] = useState([]);
+  useEffect(() => {
+    fetch("${tableDataApi[0].attributes.api}")
+      .then((response) => response.json())
+      .then((data) => {
+        setTableColumns(data.columns);
+        setTableRows(data.rows);
+      });
+  }, []);
   return (
     <div> 
       <Container maxWidth="lg"> 
