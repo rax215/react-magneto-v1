@@ -78,7 +78,7 @@ const generateComponent = (masterLayout, components) => {
 
  const ${name} = () => {
   let initialValues = ${JSON.stringify(initialValues)}
-  const [values, setValues] = useState({initialValues});
+  const [values, setValues] = useState(initialValues);
   const [tableColumns, setTableColumns] = useState([]);
   const [tableRows, setTableRows] = useState([]);
   useEffect(() => {
