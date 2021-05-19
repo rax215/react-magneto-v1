@@ -1,7 +1,12 @@
 const getTextContainer = (attributes) => { 
     return (
-        `<h2>${attributes.label}</h2>
-        `    
+        `<Grid container item lg={11} spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center">
+      <h1>${attributes.label}</h1>  
+      </Grid> 
+        ` 
     )
 }
 
