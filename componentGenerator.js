@@ -93,13 +93,7 @@ const generateComponent = (masterLayout, components) => {
     <div> 
       <Container maxWidth="lg"> 
       <Paper variant="outlined"> 
-      <Grid container className="wrapper"> 
-      <Grid container item lg={11} spacing={0}
-      direction="column"
-      alignItems="center"
-      justify="center">
-      <h1>Customer Info  </h1>  
-      </Grid>  
+      <Grid container className="wrapper">        
         ${components.map((comp) => `${comp.jsx}`).join("\n")}
       </Grid>
       </Paper>

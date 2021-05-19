@@ -100,9 +100,22 @@ const reactGenerator = async () => {
                   });
                 });
 
-                fs.copyFile(`${dirName}/template/package.json`, `./output/${projName}/package.json`, (err) => {
+                // fs.copyFile(`${dirName}/template/package.json`, `./output/${projName}/package.json`, (err) => {
+                //   if (err) throw err;
+                // });
+
+                //generate Home.js
+                fs.readFile(`${dirName}/template/Home.js`, 'utf8', (err, data) => {
                   if (err) throw err;
+                  let pkg = data.replace(/<app-name>/g, projName);
+                  fs.writeFile(`./output/${projName}/src/Home.js`, pkg, (err) => {
+                    if (err) throw err;
+                  });
                 });
+
+                // fs.copyFile(`${dirName}/template/package.json`, `./output/${projName}/package.json`, (err) => {
+                //   if (err) throw err;
+                // });
 
                 // fs.copyFile(`${dirName}/template/.gitignore`,`./output/${projName}/.gitignore`, err => {
                 //     if (err) throw err
