@@ -1,10 +1,14 @@
 const FormLabel = require("../FormLabel/FormLabel");
 const getSearchField = (attributes) => {
-    return `<Grid item lg={4} variant="outlined" className="wrapper">   
-    ${FormLabel.getFormLebel(attributes)}    
-    <OutlinedInput id="${attributes.id}" type="search"  placeholder="${attributes.placeHolder}"  variant="outlined"
+  return `<Grid item xs={2} alignItems="flex-start" className="wrapper">   
+    ${FormLabel.getFormLebel(attributes)} 
+    </Grid>
+    <Grid item xs={4} alignItems="flex-start" className="wrapper">
+    <OutlinedInput id="${attributes.id}" type="search"  placeholder="${
+    attributes.placeHolder
+  }"  variant="outlined"
     endAdornment={
-      <InputAdornment sposition="end">
+      <InputAdornment position="end">
         <IconButton
           color="primary"
           aria-label="initiate search"
@@ -14,6 +18,6 @@ const getSearchField = (attributes) => {
     }
   />
       </Grid>`;
-  };
-  
-  module.exports = { getSearchField };
+};
+
+module.exports = { getSearchField };

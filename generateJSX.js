@@ -17,6 +17,7 @@ const generateJSX = async (masterLayout) => {
     componentData.push({ compName: "Container", jsx: "" });
     masterLayout.componentList.forEach((component) => {
       if (component.type === "TextInput") {
+        componentData.push({ compName: "FormLabel", jsx: "" });
         componentData.push({
           compName: "TextField",
           jsx: ComponentLibrary.textInputComponent(component.attributes),
@@ -53,6 +54,7 @@ const generateJSX = async (masterLayout) => {
           jsx: ComponentLibrary.checkBoxComponent(component.attributes),
         });
         componentData.push({ compName: "FormGroup", jsx: "" });
+        componentData.push({ compName: "FormControlLabel", jsx: "" });
       } else if (component.type === "TextContainer") {
         componentData.push({
           compName: "Container",
@@ -75,8 +77,12 @@ const generateJSX = async (masterLayout) => {
           compName: "Container",
           jsx: ComponentLibrary.chartComponent(component.attributes),
         });
-      }if(component.type === 'SearchField') {
-        componentData.push({compName : "OutlinedInput", jsx : ComponentLibrary.searFieldComponent(component.attributes)})
+      }
+      if (component.type === "SearchField") {
+        componentData.push({
+          compName: "OutlinedInput",
+          jsx: ComponentLibrary.searFieldComponent(component.attributes),
+        });
         componentData.push({ compName: "InputAdornment", jsx: "" });
         componentData.push({ compName: "IconButton", jsx: "" });
       }
