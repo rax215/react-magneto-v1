@@ -1,14 +1,19 @@
 const FormLabel = require("../FormLabel/FormLabel");
 
 const getCheckBox = (attributes) => {
-  return `<Grid item lg={8} alignItems="flex-start" className="wrapper">
+  return `<Grid item lg={12} alignItems="flex-start" className="columnMain">
   ${FormLabel.getFormLebel(attributes)}  
-{/*<Grid item xs={2} alignItems="flex-start" className="wrapper">*/}                
+      <TableBody>
+        <TableRow>              
           <FormGroup row="true">
               {componentOptions.${attributes.id}Options.map((item) => (
+                <TableCell className="column">
                   <FormControlLabel control={<Checkbox name={item} />} label={item} />
+                </TableCell>  
                   ))}
           </FormGroup>
+        </TableRow>
+      </TableBody>
 </Grid>
     `;
 };
