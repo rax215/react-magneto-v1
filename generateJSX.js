@@ -1,4 +1,4 @@
-const ComponentLibrary = require("./componentLIbrary");
+const ComponentLibrary = require("./componentLibrary");
 const ComponentGenerator = require("./componentGenerator");
 
 const generateComponent = (componentName, componentData) => {
