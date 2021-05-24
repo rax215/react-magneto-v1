@@ -28,7 +28,7 @@ const generateComponent = (masterLayout, components) => {
   const primeComponents = components.filter(
     (comp) => comp.compName && comp.compName !== "Chart"
   );
-  let jsxCode = ''
+  let jsxCode = "";
 
   if (chartCmpList && chartCmpList.length > 0) {
     chartCmpList.forEach((comp) => {
@@ -47,10 +47,11 @@ const generateComponent = (masterLayout, components) => {
       ...new Set(chartCmpList.map((comp) => comp.attributes.type)),
     ].join(", ")} } from 'react-chartjs-2';\n`;
   }
-  var compArry = [...new Set(primeComponents.map((comp) => comp.compName)),];
-    compArry.forEach(function(comp) {
-      const primeCompName = comp.toLowerCase()
-      jsxCode = jsxCode + `import { ${comp} } from 'primereact/${primeCompName}';\n`
+  var compArry = [...new Set(primeComponents.map((comp) => comp.compName))];
+  compArry.forEach(function (comp) {
+    const primeCompName = comp.toLowerCase();
+    jsxCode =
+      jsxCode + `import { ${comp} } from 'primereact/${primeCompName}';\n`;
   });
   jsxCode =
     jsxCode +
@@ -63,7 +64,7 @@ const generateComponent = (masterLayout, components) => {
 
  const ${name} = () => {
   let initialValues = ${JSON.stringify(initialValues)}
-  const [values, setValues] = useState(initialValues);
+  const [values, setValues] = useState([]);
   const [tableColumns, setTableColumns] = useState([]);
   const [tableRows, setTableRows] = useState([]);
   useEffect(() => {
@@ -74,6 +75,10 @@ const generateComponent = (masterLayout, components) => {
         setTableRows(data.rows);
       });
   }, []); 
+  
+  const handleChange = (event) => {
+    setValues(event.target.values);
+  };
   return (
     <div>            
         ${components.map((comp) => `${comp.jsx}`).join("\n")}
