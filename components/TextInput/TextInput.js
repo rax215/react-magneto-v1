@@ -12,8 +12,7 @@ const getTextField = (attributes) => {
     </Grid>`;
   } else if (attributes.library === 'primeReact') {
     component = `<label htmlFor="${attributes.id}Label">${attributes.label}</label>
-    <TextField id="${attributes.id
-      }" className="formlabel" variant="outlined" style={{ minWidth: 278 }}/>`
+    <InputText id="${attributes.id} "className="formlabel" variant="outlined" style={{ minWidth: 278 }}/>`
 
   };
 

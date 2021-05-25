@@ -100,7 +100,17 @@ const generateJSX = async (masterLayout) => {
     } else if (library === "primeReact") {
       componentGenerator = PrimeComponentGenerator;
       masterLayout.componentList.forEach((component) => {
-        if (component.type === "Chart") {
+        if (component.type === "TextInput") {
+          componentData.push({
+            compName: "InputText",
+            jsx: ComponentLibrary.textInputComponent(component.attributes),
+          });
+        }else if (component.type === "DropDown") {
+          componentData.push({
+            compName: "Dropdown",
+            jsx: ComponentLibrary.dropDownComponent(component.attributes),
+          });
+        } else if (component.type === "Chart") {
           componentData.push({
             compName: "Chart",
             jsx: ComponentLibrary.chartComponent(component.attributes),

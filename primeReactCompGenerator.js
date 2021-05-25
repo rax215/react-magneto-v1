@@ -55,9 +55,7 @@ const generateComponent = (masterLayout, components) => {
   });
   jsxCode =
     jsxCode +
-    `import 'primereact/resources/themes/saga-blue/theme.css';
-    import 'primereact/resources/primereact.css';
-    import {useState, useEffect} from 'react';
+    `import {useState, useEffect} from 'react';
     import './App.css';
    let componentOptions = ${JSON.stringify(componentOptions)} 
    ${chartData}  
