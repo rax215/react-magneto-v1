@@ -2,7 +2,11 @@ const ComponentLibrary = require("./componentLibrary");
 const MuiComponentGenerator = require("./componentGenerator");
 const PrimeComponentGenerator = require("./primeReactCompGenerator");
 
-const generateComponent = (componentName, componentData, componentGenerator) => { 
+const generateComponent = (
+  componentName,
+  componentData,
+  componentGenerator
+) => {
   const res = componentGenerator.generateComponent(
     componentName,
     componentData
@@ -12,8 +16,10 @@ const generateComponent = (componentName, componentData, componentGenerator) => 
 
 const generateJSX = async (masterLayout) => {
   return new Promise((resolve, reject) => {
-    let componentData = [], library = masterLayout.library, componentGenerator;
-    
+    let componentData = [],
+      library = masterLayout.library,
+      componentGenerator;
+
     if (library === "materialUi") {
       componentGenerator = MuiComponentGenerator;
       componentData.push({ compName: "Grid", jsx: "" });
@@ -105,10 +111,24 @@ const generateJSX = async (masterLayout) => {
             jsx: ComponentLibrary.tableComponent(component.attributes),
           });
           componentData.push({ compName: "Column", jsx: "" });
+        } else if (component.type === "RadioButton") {
+          componentData.push({
+            compName: "RadioButton",
+            jsx: ComponentLibrary.radioButtonComponent(component.attributes),
+          });
+        } else if (component.type === "CheckBox") {
+          componentData.push({
+            compName: "Checkbox",
+            jsx: ComponentLibrary.checkBoxComponent(component.attributes),
+          });
         }
       });
     }
-    const jsxFile = generateComponent(masterLayout, componentData, componentGenerator);
+    const jsxFile = generateComponent(
+      masterLayout,
+      componentData,
+      componentGenerator
+    );
     resolve(jsxFile);
   });
 };
