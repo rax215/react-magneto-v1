@@ -11,7 +11,10 @@ const generateComponent = (masterLayout, components) => {
     (comp) => comp.type == "Chart"
   );
 
-  let tableDataApi = masterLayout.componentList.filter((comp) => comp.type == 'Table');
+  let tableDataApi = masterLayout.componentList.filter(
+    (comp) => comp.type == "Table"
+  );
+  console.log(tableDataApi);
 
   let dateComp = masterLayout.componentList.filter(
     (comp) => comp.type == "DatePicker"
@@ -22,7 +25,7 @@ const generateComponent = (masterLayout, components) => {
 
   let componentOptions = {},
     initialValues = {},
-    chartData = ""
+    chartData = "";
 
   optList.forEach((comp) => {
     initialValues[comp.attributes.id] = "";
@@ -54,20 +57,20 @@ const generateComponent = (masterLayout, components) => {
     ].join(", ")} } from 'react-chartjs-2';\n`;
   }
 
-  if (dateComp) {
-    jsxDateCode = `import { ${[
-      ...new Set(materialPicker.map((comp) => comp.compPickerName)),
-    ].join(", ")} } from '@material-ui/pickers';\n
+  if (dateComp && dateComp.length > 0) {
+    jsxCode =
+      jsxCode +
+      `import { ${[
+        ...new Set(materialPicker.map((comp) => comp.compPickerName)),
+      ].join(", ")} } from '@material-ui/pickers';\n
     import DateFnsUtils from "@date-io/date-fns";\n`;
   }
-  if(searchFieldComp && searchFieldComp.length>0) {
-    jsxCode =
-    jsxCode +
-    `import SearchIcon from '@material-ui/icons/Search';\n`
+
+  if (searchFieldComp && searchFieldComp.length > 0) {
+    jsxCode = jsxCode + `import SearchIcon from '@material-ui/icons/Search';\n`;
   }
   jsxCode =
     jsxCode +
-    jsxDateCode +
     `import {useState, useEffect} from 'react';
     import { ${[
       ...new Set(materialComponents.map((comp) => comp.compName)),
@@ -88,12 +91,12 @@ const generateComponent = (masterLayout, components) => {
         setTableColumns(data.columns);
         setTableRows(data.rows);
       });
-  }, []);
+  }, []); 
   return (
     <div> 
       <Container maxWidth="lg"> 
       <Paper variant="outlined"> 
-      <Grid container className="wrapper">        
+      <Grid container alignItems="center" className="wrapper">        
         ${components.map((comp) => `${comp.jsx}`).join("\n")}
       </Grid>
       </Paper>

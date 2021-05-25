@@ -1,6 +1,19 @@
 const getTable = (attributes) => {
-  return `<TableContainer style={{maxHeight: 440}}>
-  <Table ${attributes.stickyHeader ? 'stickyHeader' : ''} >
+  let component = '';
+  let library = attributes.library ? attributes.library : "materialUi";
+  if (attributes.library === "primeReact") {
+    component = `<div>
+    <div className="card">
+        <DataTable value={tableRows}>
+          {tableColumns.map((column) => (
+            <Column key={column.field} field={column.field} header={column.label} />
+            ))}
+        </DataTable>
+    </div>
+  </div>`;
+  } else if (attributes.library === "materialUi") {
+    component = `<TableContainer style={{maxHeight: 440}}>
+  <Table ${attributes.stickyHeader ? "stickyHeader" : ""} >
     <TableHead>
       <TableRow>
       {tableColumns.length > 0 &&
@@ -21,6 +34,9 @@ const getTable = (attributes) => {
     </TableBody>
   </Table>
 </TableContainer> `;
+  }
+
+  return component;
 };
 
 module.exports = { getTable };

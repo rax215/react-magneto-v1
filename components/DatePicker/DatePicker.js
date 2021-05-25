@@ -1,11 +1,17 @@
+const FormLabel = require("../FormLabel/FormLabel");
+
 const getDatePicker = (attributes) => {
-  return `<Grid item lg={4} className="wrapper">
+  return `<Grid item xs={2} alignItems="flex-start" className="wrapper">   
+  ${FormLabel.getFormLebel(attributes)} 
+  </Grid>
+  <Grid item xs={4} alignItems="flex-start" className="wrapper">
             <form noValidate>
                 <TextField
                     id="date"
-                    label="${attributes.label}"
                     type="date"
                     defaultValue="${attributes.format}"
+                    variant="outlined"
+                    style={{ minWidth: 278 }}
                     InputLabelProps={{
                     shrink: true,
                     }}

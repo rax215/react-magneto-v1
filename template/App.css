@@ -1,8 +1,28 @@
 .wrapper {
-  padding:20px!important;
-  }
-  
-  .formlabel , h1{
-    font-weight: bold;
-    color: #f50057;
-  }
+  padding: 5px !important;
+}
+
+h1 {
+  font-weight: bold;
+  color: rgb(247, 43, 43);
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.formlabel {
+  font-weight: 700 !important;
+  color: rgb(75, 71, 71) !important;
+}
+
+.column {
+  padding-right: 100px !important;
+  padding-left: 50px !important;
+  justify-content: space-between !important;
+  width: 150px !important;
+  height: 15px !important;
+  border-bottom: 0px !important;
+}
+
+.columnMain {
+  padding-top: 23px !important;
+  padding-left: 5px !important;
+}
