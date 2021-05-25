@@ -13,7 +13,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';`
 
 const primeReactImport = `import 'primereact/resources/themes/saga-blue/theme.css';
-import 'primereact/resources/primereact.min.css';`
+import 'primereact/resources/primereact.min.css';
+import 'primeflex/primeflex.css';`
 
 const indexImportAdd = `ReactDOM.render(
   <React.StrictMode>
@@ -23,6 +24,21 @@ const indexImportAdd = `ReactDOM.render(
 );
 
 reportWebVitals();`
+
+const materialUIDependencies = `"@material-ui/core": "^4.11.3",
+"@material-ui/icons": "^4.11.2",
+"@material-ui/pickers": "^3.3.10",`
+
+const primeReactDependencies = `"primeflex": "^2.0.0",
+"primereact": "^6.3.2",`
+
+getDependencies = (masterLayout) => {
+  if(masterLayout.library === 'primeReact') {
+    return primeReactDependencies
+  } else  if(masterLayout.library === 'materialUi') {
+    return materialUIDependencies
+  }
+}
 
 const getIndexData = masterLayout => {
   if(masterLayout.library === 'primeReact') {
@@ -147,9 +163,10 @@ const reactGenerator = async () => {
                   (err, data) => {
                     if (err) throw err;
                     let pkg = data.replace("<app-name>", projName);
+                    let newPkg = pkg.replace("<app-dependencies>", getDependencies(masterLayout))
                     fs.writeFile(
                       `./output/${projName}/package.json`,
-                      pkg,
+                      newPkg,
                       (err) => {
                         if (err) throw err;
                       }

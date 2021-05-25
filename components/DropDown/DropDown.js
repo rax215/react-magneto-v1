@@ -14,12 +14,16 @@ const getDropDown = (attributes) => {
    </Grid>
 `
     } else if(attributes.library === 'primeReact') {
-        component = `<label htmlFor="${attributes.id}Label">${attributes.label}</label>
-        <Dropdown value={values.${attributes.id}} options={componentOptions.${attributes.id}Options.map(item => {let resp = {}
+        component = `<div className="p-field p-grid">
+        <label htmlFor="${attributes.id}Label" className="p-col-fixed" style={{width:'250px'}}>${attributes.label}</label>
+        <div className="p-col">
+            <Dropdown value={values.${attributes.id}} options={componentOptions.${attributes.id}Options.map(item => {let resp = {}
             resp.label = item
             resp.value = item              
             return resp
-          })} placeholder="Select an option" />`
+          })} placeholder="Select an option" />
+        </div>
+    </div>`
     }
 
     return (
