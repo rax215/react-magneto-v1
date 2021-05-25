@@ -6,6 +6,32 @@ const parser = new (require("simple-excel-to-json").XlsParser)();
 
 let projName = "";
 
+let indexImport = `import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom'
+import App from './App';
+import reportWebVitals from './reportWebVitals';`
+
+const primeReactImport = `import 'primereact/resources/themes/saga-blue/theme.css';
+import 'primereact/resources/primereact.min.css';`
+
+const indexImportAdd = `ReactDOM.render(
+  <React.StrictMode>
+    <Router><App /></Router>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+
+reportWebVitals();`
+
+const getIndexData = masterLayout => {
+  if(masterLayout.library === 'primeReact') {
+    return indexImport + '\n' + primeReactImport +'\n' + indexImportAdd
+  } else {
+    return indexImport + '\n' + indexImportAdd
+  }
+}
+
 const generateJSXFile = async (masterLayout) => {
   const result = await generateJSX(masterLayout);
   return result;
@@ -65,13 +91,13 @@ const reactGenerator = async () => {
                   }
                 );
 
-                fs.copyFile(
-                  `${dirName}/template/index.js`,
-                  `./output/${projName}/src/index.js`,
-                  (err) => {
-                    if (err) throw err;
-                  }
-                );
+                // fs.copyFile(`${dirName}/template/index.js`, `./output/${projName}/src/index.js`, (err) => {
+                //   if (err) throw err;
+                // });
+
+                fs.writeFile(`./output/${projName}/src/index.js`, getIndexData(masterLayout), (err) => {
+                  if (err) throw err;
+                });
 
                 fs.copyFile(
                   `${dirName}/template/reportWebVitals.js`,
