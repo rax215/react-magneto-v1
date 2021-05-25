@@ -7,13 +7,15 @@ const getTextField = (attributes) => {
   ${FormLabel.getFormLebel(attributes)} 
   </Grid>
   <Grid item xs={4} alignItems="flex-start" className="wrapper">       
-        <TextField id="${attributes.id
-      }" className="formlabel" variant="outlined" style={{ minWidth: 278 }}/>
+        <TextField id="${attributes.id}" className="formlabel" variant="outlined" style={{ minWidth: 278 }}/>
     </Grid>`;
   } else if (attributes.library === 'primeReact') {
-    component = `<label htmlFor="${attributes.id}Label">${attributes.label}</label>
-    <InputText id="${attributes.id} "className="formlabel" variant="outlined" style={{ minWidth: 278 }}/>`
-
+    component = `<div className="p-field p-grid">
+    <label htmlFor="${attributes.id}Label" className="p-col-fixed" style={{width:'250px'}}>${attributes.label}</label>
+    <div className="p-col">
+      <InputText id="${attributes.id}" variant="outlined" style={{ minWidth: 300 }}/>
+    </div>
+    </div>`
   };
 
   return (`<div>

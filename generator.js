@@ -13,7 +13,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';`
 
 const primeReactImport = `import 'primereact/resources/themes/saga-blue/theme.css';
-import 'primereact/resources/primereact.min.css';`
+import 'primereact/resources/primereact.min.css';
+import 'primeflex/primeflex.css';`
 
 const indexImportAdd = `ReactDOM.render(
   <React.StrictMode>

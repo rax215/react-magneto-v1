@@ -13,18 +13,21 @@ const getRadioGroup = (attributes) => {
 </Grid>
     `;
   } else if (attributes.library === "primeReact") {
-    component = `<label htmlFor="${attributes.id}Label">${attributes.label}</label>
-      {componentOptions.${attributes.id}Options.map((item) => (
-        <div>
-        <RadioButton value="{item}" onChange={handleChange}
-        checked={values == { item }} />
-        <label className='p-radiobutton-label'>{item}</label> 
-        </div>   
-          ))}   
-      `;
-
-    console.log(component);
+    component = `<div className="p-field p-grid">    
+      <label htmlFor="${attributes.id}Label" className="p-col-fixed" style={{width:'250px'}}>${attributes.label}</label>
+      <div className="p-col">
+        <div className="p-formgroup-inline">
+        {componentOptions.${attributes.id}Options.map((item) => (
+          <div className="p-field-checkbox">
+            <RadioButton value="{item}" onChange={handleChange} checked={values === { item }} />
+            <label className='p-radiobutton-label'>{item}</label> 
+          </div>   
+          ))}
+      </div>      
+    </div>
+  </div>`;
   }
+
   return `<div> 
        ${component}
     </div>`;

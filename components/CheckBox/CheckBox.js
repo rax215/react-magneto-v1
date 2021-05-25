@@ -20,17 +20,19 @@ const getCheckBox = (attributes) => {
   </Grid>
   `;
   } else if (attributes.library === "primeReact") {
-    component = ` 
-    <label htmlFor="${attributes.id}Label">${attributes.label}</label>
-    
+    component = `<div className="p-field p-grid"> 
+    <label htmlFor="${attributes.id}Label" className="p-col-fixed" style={{width:'250px'}}>${attributes.label}</label>
+    <div className="p-col">
+      <div className="p-formgroup-inline">
     {componentOptions.${attributes.id}Options.map((item) => (
-      <div>
-      <Checkbox value={item} onChange={handleChange}
-      checked={values == { item }}></Checkbox>
-    <label className="p-checkbox-label">{item}</label>  
-    </div>      
+        <div className="p-field-checkbox">
+         <Checkbox value={item} onChange={handleChange} checked={values === { item }}></Checkbox>
+         <label className="p-checkbox-label">{item}</label>  
+        </div>      
         ))}
- 
+        </div>
+      </div>  
+ </div>
 `;
   }
 
