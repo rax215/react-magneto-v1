@@ -17,7 +17,7 @@ const getDropDown = (attributes) => {
         component = `<div className="p-field p-grid">
         <label htmlFor="${attributes.id}Label" className="p-col-fixed" style={{width:'250px'}}>${attributes.label}</label>
         <div className="p-col">
-            <Dropdown value={values.${attributes.id}} options={componentOptions.${attributes.id}Options.map(item => {let resp = {}
+            <Dropdown value={values.${attributes.id}} id="${attributes.id}" name="${attributes.id}" options={componentOptions.${attributes.id}Options.map(item => {let resp = {}
             resp.label = item
             resp.value = item              
             return resp
