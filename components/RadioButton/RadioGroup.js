@@ -13,7 +13,8 @@ const getRadioGroup = (attributes) => {
 </Grid>
     `;
   } else if (attributes.library === "primeReact") {
-    component = `<div className="p-field p-grid">    
+    component = `<div>
+    <div className="p-field p-grid">    
       <label htmlFor="${attributes.id}Label" className="p-col-fixed" style={{width:'250px'}}>${attributes.label}</label>
       <div className="p-col">
         <div className="p-formgroup-inline">
@@ -25,12 +26,11 @@ const getRadioGroup = (attributes) => {
           ))}
       </div>      
     </div>
+  </div>
   </div>`;
   }
 
-  return `<div> 
-       ${component}
-    </div>`;
+  return `${component}`;
 };
 
 module.exports = { getRadioGroup };
