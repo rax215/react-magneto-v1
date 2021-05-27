@@ -5,6 +5,7 @@ const generateComponent = (masterLayout, components) => {
   );
 
   let label = labelComponent && labelComponent.length > 0 && `<div><h1>${labelComponent[0].attributes.label}</h1></div>`
+  
   let optList = masterLayout.componentList.filter(
     (comp) =>
       comp.type == "RadioButton" ||
@@ -84,7 +85,7 @@ const generateComponent = (masterLayout, components) => {
   };
   return (
     <div>
-        ${label}            
+        ${label}
         ${components.map((comp) => `${comp.jsx}`).join("\n")}
     </div>
   )
