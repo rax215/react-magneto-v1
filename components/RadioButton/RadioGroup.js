@@ -20,7 +20,7 @@ const getRadioGroup = (attributes) => {
         <div className="p-formgroup-inline">
         {componentOptions.${attributes.id}Options.map((item) => (
           <div className="p-field-checkbox">
-            <RadioButton value="{item}" onChange={handleChange} checked={values === { item }} />
+            <RadioButton inputId={item} name="${attributes.id}" value={item} onChange={handleInputChange} checked={values.${attributes.id} === item} />
             <label className='p-radiobutton-label'>{item}</label> 
           </div>   
           ))}

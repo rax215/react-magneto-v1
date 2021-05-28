@@ -14,7 +14,7 @@ const getTextField = (attributes) => {
     <div className="p-field p-grid">
     <label htmlFor="${attributes.id}Label" className="p-col-fixed" style={{width:'250px'}}>${attributes.label}</label>
     <div className="p-col">
-      <InputText id="${attributes.id}" variant="outlined" style={{ minWidth: 300 }}/>
+      <InputText id="${attributes.id}" name="${attributes.id}" onChange= {handleInputChange} variant="outlined" style={{ minWidth: 300 }}/>
     </div>
     </div>
     </div>`
