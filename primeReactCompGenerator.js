@@ -1,6 +1,5 @@
 const generateComponent = (masterLayout, components) => {
   const name = masterLayout.componentName;
-
   let labelComponent = masterLayout.componentList.filter(
     (comp) => comp.type == "TextContainer"
   );
@@ -27,7 +26,10 @@ const generateComponent = (masterLayout, components) => {
     chartData = "";
 
   optList.forEach((comp) => {
-    initialValues[comp.attributes.id] = "";
+    if(comp.type === 'CheckBox')
+      initialValues[comp.attributes.id] = [];
+    else
+      initialValues[comp.attributes.id] = "";
     componentOptions[comp.attributes.id + "Options"] =
       comp.attributes.options.split(",");
   });
@@ -69,7 +71,7 @@ const generateComponent = (masterLayout, components) => {
 
  const ${name} = () => {
   let initialValues = ${JSON.stringify(initialValues)}
-  const [values, setValues] = useState([]);
+  const [values, setValues] = useState(initialValues);
   const [tableColumns, setTableColumns] = useState([]);
   const [tableRows, setTableRows] = useState([]);
   useEffect(() => {
@@ -81,8 +83,16 @@ const generateComponent = (masterLayout, components) => {
       });
   }, []); 
   
-  const handleChange = (event) => {
-    setValues(event.target.values);
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setValues({ ...values, [name]: value });
+  };
+  const handleCheckBoxSelection = (e) => {
+    const { name, value } = e.target;
+    let selectedOptions = [...values[name]];
+    if (e.checked) selectedOptions.push(value);
+    else selectedOptions.splice(selectedOptions.indexOf(value), 1);
+    setValues({ ...values, [name]: selectedOptions });
   };
   return (
     <div>

@@ -2,11 +2,7 @@ const ComponentLibrary = require("./componentLibrary");
 const MuiComponentGenerator = require("./componentGenerator");
 const PrimeComponentGenerator = require("./primeReactCompGenerator");
 
-const generateComponent = (
-  componentName,
-  componentData,
-  componentGenerator
-) => {
+const generateComponent = (componentName, componentData,componentGenerator) => {
   const res = componentGenerator.generateComponent(
     componentName,
     componentData

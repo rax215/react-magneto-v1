@@ -9,12 +9,10 @@ const getTextContainer = (attributes) => {
       </Grid> 
         `;
       } else if(attributes.library === 'primeReact') {
-        component = `<h1>${attributes.label}</h1>`  
+        component = `<div>
+        <h1>${attributes.label}</h1>
+        </div>`  
       }
- return (
-        `<div>
-            ${component}
-        </div>`
-    )
+ return `${component}`
  }
 module.exports = { getTextContainer };

@@ -10,16 +10,16 @@ const getTextField = (attributes) => {
         <TextField id="${attributes.id}" className="formlabel" variant="outlined" style={{ minWidth: 278 }}/>
     </Grid>`;
   } else if (attributes.library === 'primeReact') {
-    component = `<div className="p-field p-grid">
+    component = `<div>
+    <div className="p-field p-grid">
     <label htmlFor="${attributes.id}Label" className="p-col-fixed" style={{width:'250px'}}>${attributes.label}</label>
     <div className="p-col">
-      <InputText id="${attributes.id}" variant="outlined" style={{ minWidth: 300 }}/>
+      <InputText id="${attributes.id}" name="${attributes.id}" onChange= {handleInputChange} variant="outlined" style={{ minWidth: 300 }}/>
+    </div>
     </div>
     </div>`
   };
 
-  return (`<div>
-  ${component}
-  </div>`)
+  return `${component}`
 }
 module.exports = { getTextField };

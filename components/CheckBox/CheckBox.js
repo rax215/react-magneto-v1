@@ -20,25 +20,25 @@ const getCheckBox = (attributes) => {
   </Grid>
   `;
   } else if (attributes.library === "primeReact") {
-    component = `<div className="p-field p-grid"> 
+    component = `<div>
+    <div className="p-field p-grid"> 
     <label htmlFor="${attributes.id}Label" className="p-col-fixed" style={{width:'250px'}}>${attributes.label}</label>
     <div className="p-col">
       <div className="p-formgroup-inline">
     {componentOptions.${attributes.id}Options.map((item) => (
         <div className="p-field-checkbox">
-         <Checkbox value={item} onChange={handleChange} id="${attributes.id}" name="${attributes.id}" checked={values === { item }}></Checkbox>
+         <Checkbox value={item} inputId={item} onChange={handleCheckBoxSelection} id="${attributes.id}" name="${attributes.id}" checked={values.${attributes.id}.includes(item)}></Checkbox>
          <label className="p-checkbox-label">{item}</label>  
         </div>      
         ))}
         </div>
       </div>  
  </div>
+ </div>
 `;
   }
 
-  return `<div> 
-       ${component}
-    </div>`;
+  return `${component}`;
 };
 
 module.exports = { getCheckBox };

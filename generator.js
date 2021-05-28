@@ -55,7 +55,7 @@ const generateJSXFile = async (masterLayout) => {
 
 const readExcelFile = () => {
   // .xlsx file path
-  const filePath = path.join(__dirname, "ui1.xlsx");
+  const filePath = path.join(__dirname, "CRF.xlsx");
 
   // parsing excel file
   var data = parser.parseXls2Json(filePath, {
