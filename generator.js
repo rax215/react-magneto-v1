@@ -14,7 +14,8 @@ import reportWebVitals from './reportWebVitals';`
 
 const primeReactImport = `import 'primereact/resources/themes/saga-blue/theme.css';
 import 'primereact/resources/primereact.min.css';
-import 'primeflex/primeflex.css';`
+import 'primeflex/primeflex.css';
+import 'primeicons/primeicons.css';`
 
 const indexImportAdd = `ReactDOM.render(
   <React.StrictMode>
@@ -30,7 +31,9 @@ const materialUIDependencies = `"@material-ui/core": "^4.11.3",
 "@material-ui/pickers": "^3.3.10",`
 
 const primeReactDependencies = `"primeflex": "^2.0.0",
-"primereact": "^6.3.2",`
+"primereact": "^6.3.2",
+"primeicons": "^4.1.0",
+"react-transition-group": "^4.4.2"`
 
 getDependencies = (masterLayout) => {
   if(masterLayout.library === 'primeReact') {
@@ -55,7 +58,7 @@ const generateJSXFile = async (masterLayout) => {
 
 const readExcelFile = () => {
   // .xlsx file path
-  const filePath = path.join(__dirname, "CRF.xlsx");
+  const filePath = path.join(__dirname, "ui1.xlsx");
 
   // parsing excel file
   var data = parser.parseXls2Json(filePath, {
