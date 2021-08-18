@@ -1,5 +1,6 @@
 const generateComponent = (masterLayout, components) => {
   const name = masterLayout.componentName;
+  const layout = masterLayout.layout || 'horizontal';
   let labelComponent = masterLayout.componentList.filter(
     (comp) => comp.type == "TextContainer"
   );
@@ -34,7 +35,7 @@ const generateComponent = (masterLayout, components) => {
       comp.attributes.options.split(",");
   });
 
-  const primeComponents = components.filter(
+  const componentsArray = components.filter(
     (comp) => comp.compName && comp.compName !== "Chart"
   );
   let jsxCode = "";
@@ -56,16 +57,25 @@ const generateComponent = (masterLayout, components) => {
       ...new Set(chartCmpList.map((comp) => comp.attributes.type)),
     ].join(", ")} } from 'react-chartjs-2';\n`;
   }
-  var compArry = [...new Set(primeComponents.map((comp) => comp.compName))];
-  compArry.forEach(function (comp) {
-    const primeCompName = comp.toLowerCase();
-    jsxCode =
-      jsxCode + `import { ${comp} } from 'primereact/${primeCompName}';\n`;
-  });
+  var compArry = [...new Set(componentsArray.map((comp) => comp.compName))];
+  if(masterLayout.library === 'primeReact') {
+    compArry.forEach(function (comp) {
+      const primeCompName = comp.toLowerCase();
+      jsxCode =
+        jsxCode + `import { ${comp} } from 'primereact/${primeCompName}';\n`;
+    });
+  }
+  if(masterLayout.library === 'materialUI') {
+    jsxCode = jsxCode + `import { ${[
+      ...new Set(componentsArray.map((comp) => comp.compName)),
+    ].join(", ")} } from '@material-ui/core';`
+  }
   jsxCode =
     jsxCode +
-    `import {useState, useEffect} from 'react';
+    `
+    import {useState, useEffect} from 'react';
     import './App.css';
+    import './${layout}.css';
    let componentOptions = ${JSON.stringify(componentOptions)} 
    ${chartData}  
 
@@ -96,8 +106,10 @@ const generateComponent = (masterLayout, components) => {
   };
   return (
     <div>
-        ${label}
+    ${label}
+    <div classname="parent">        
         ${components.map((comp) => `${comp.jsx}`).join("\n")}
+    </div>
     </div>
   )
 }

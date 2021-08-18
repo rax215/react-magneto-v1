@@ -1,6 +1,5 @@
 const ComponentLibrary = require("./componentLibrary");
-const MuiComponentGenerator = require("./componentGenerator");
-const PrimeComponentGenerator = require("./primeReactCompGenerator");
+const componentGenerator = require("./reactComponentGenerator");
 
 const generateComponent = (componentName, componentData,componentGenerator) => {
   const res = componentGenerator.generateComponent(
@@ -12,15 +11,10 @@ const generateComponent = (componentName, componentData,componentGenerator) => {
 
 const generateJSX = async (masterLayout) => {
   return new Promise((resolve, reject) => {
-    let componentData = [],
-      library = masterLayout.library,
-      componentGenerator;
+    let componentData = [];
+    let library = masterLayout.library || "materialUI";
 
-    if (library === "materialUi") {
-      componentGenerator = MuiComponentGenerator;
-      componentData.push({ compName: "Grid", jsx: "" });
-      componentData.push({ compName: "Paper", jsx: "" });
-      componentData.push({ compName: "Container", jsx: "" });
+    if (library === "materialUI") {      
 
       masterLayout.componentList.forEach((component) => {
         if (component.type === "TextInput") {
@@ -62,13 +56,8 @@ const generateJSX = async (masterLayout) => {
           });
           componentData.push({ compName: "FormGroup", jsx: "" });
           componentData.push({ compName: "FormControlLabel", jsx: "" });
-        } else if (component.type === "TextContainer") {
-          componentData.push({
-            compName: "Container",
-            jsx: ComponentLibrary.textContainerComponent(component.attributes),
-          });
-          componentData.push({ compName: "Paper", jsx: "" });
-          componentData.push({ compName: "Grid", jsx: "" });
+        
+
         } else if (component.type === "Table") {
           componentData.push({
             compName: "Table",
@@ -94,7 +83,7 @@ const generateJSX = async (masterLayout) => {
         }
       });
     } else if (library === "primeReact") {
-      componentGenerator = PrimeComponentGenerator;
+      
       masterLayout.componentList.forEach((component) => {
         if (component.type === "TextInput") {
           componentData.push({
@@ -130,6 +119,7 @@ const generateJSX = async (masterLayout) => {
         }
       });
     }
+    
     const jsxFile = generateComponent(
       masterLayout,
       componentData,

@@ -33,7 +33,7 @@ const materialUIDependencies = `"@material-ui/core": "^4.11.3",
 const primeReactDependencies = `"primeflex": "^2.0.0",
 "primereact": "^6.3.2",
 "primeicons": "^4.1.0",
-"react-transition-group": "^4.4.2"`
+"react-transition-group": "^4.4.2",`
 
 getDependencies = (masterLayout) => {
   if(masterLayout.library === 'primeReact') {
@@ -81,6 +81,7 @@ const reactGenerator = async () => {
         const masterLayout = readExcelFile();
 
         projName = masterLayout.componentName;
+        layout = masterLayout.layout || 'horizontal'
 
         fs.mkdir(`./output/${projName}`, (err) => {
           if (err) {
@@ -97,6 +98,14 @@ const reactGenerator = async () => {
                 fs.copyFile(
                   `${dirName}/template/App.css`,
                   `./output/${projName}/src/App.css`,
+                  (err) => {
+                    if (err) throw err;
+                  }
+                );
+
+                fs.copyFile(
+                  `${dirName}/template/${layout}.css`,
+                  `./output/${projName}/src/${layout}.css`,
                   (err) => {
                     if (err) throw err;
                   }

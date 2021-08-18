@@ -1,0 +1,27 @@
+.parent {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .child {
+    /* percent per item in row. 
+    33% = limit to 3 per row. */
+    flex: 1 0 33%; 
+    margin: 5px;
+  }
+
+  .child-row{
+    flex: 33%;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .formlabel{
+    font-weight: 700 !important;
+    color: rgb(68, 37, 37) !important;
+    width: 250px;
+    display: inline-block;
+    margin: 15px;
+  }
+  
