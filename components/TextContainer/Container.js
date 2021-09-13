@@ -1,9 +1,12 @@
 const getTextContainer = (attributes) => {
   let component = ''
-    if(attributes.library === 'materialUI') {
-  component = `<div> 
+    if(attributes.library === 'materialUi') {
+  component = `<Grid container item lg={11} spacing={0}
+      direction="column"
+      alignItems="center"
+      justify="center">
       <h1>${attributes.label}</h1>  
-      </div> 
+      </Grid> 
         `;
       } else if(attributes.library === 'primeReact') {
         component = `<div>

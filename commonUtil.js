@@ -36,7 +36,6 @@ const createMasterLayout = (compArr) => {
   let metadata = captureMetadata(compArr[0])
   masterLayout.componentName = metadata.name.replace(/\s/g,'')
   masterLayout.library = metadata.library
-  masterLayout.layout = metadata.layout
 
   let layoutCompList = [];
   let componentList = compArr.splice(1);

@@ -1,36 +1,22 @@
-const generator = require('./generator')
-const express = require('express')
-const fsprom = require('fs').promises
-const fs = require('fs')
-const app = express()
-const port = 9000
-const AdmZip = require('adm-zip')
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
+const dotenv = require('dotenv');
+dotenv.config();
 
+const router = require('./routes/main.routes');
+const app = express();
+const fileUpload = require('express-fileupload');
+app.use(
+  fileUpload({
+    createParentPath: true,
+  })
+);
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
-app.get('/download', async(req,res) => {
-    await fsprom.rmdir('./output', { recursive: true }).then(() => console.log('directory removed!'))
-    await generator.reactGenerator()
-    
-    const projDir = __dirname+'/output/'
-    let compName = ''
-    fs.readdir(projDir, (err, files) => {
-        files.forEach(file => {
-          compName = file;
-        });
-    });
-    
-    const zip = new AdmZip()   
-    zip.addLocalFolder(projDir, compName)
+app.use(process.env.API, router);
 
-    const downloadName = 'download.zip'
-    const data = zip.toBuffer();
-    zip.writeZip(__dirname+'/'+downloadName)
-    
-    res.set('Content-Type','application/octet-stream');
-    res.set('Content-Disposition',`attachment; filename=${downloadName}`);
-    res.set('Content-Length',data.length);
-    res.send(data);
-    
-})
-
-app.listen(port, () => console.log(`Server started on port ${port}`))
+app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));

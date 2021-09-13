@@ -2,26 +2,31 @@ const FormLabel = require("../FormLabel/FormLabel");
 
 const getRadioGroup = (attributes) => {
   let component = "";
-  let className = attributes.className || "child-row";
-  if (attributes.library === "materialUI") {
-    component = `<div className="${className}">
+
+  if (attributes.library === "materialUi") {
+    component = ` <Grid item lg={4} className="wrapper">
     ${FormLabel.getFormLebel(attributes)}
     <RadioGroup aria-label="${attributes.id}" name="${attributes.label}" row>
         {componentOptions.${attributes.id}Options.map((item) => (
             <FormControlLabel value={item} control={<Radio />} label={item} /> ))}
     </RadioGroup>
-</div>`;
+</Grid>
+    `;
   } else if (attributes.library === "primeReact") {
-    component = `<div className="${className}">  
-      <label htmlFor="${attributes.id}Label" className="p-col-fixed formlabel">${attributes.label}</label>
-      <div className="p-col p-formgroup-inline">
+    component = `<div>
+    <div className="p-field p-grid">    
+      <label htmlFor="${attributes.id}Label" className="p-col-fixed" style={{width:'250px'}}>${attributes.label}</label>
+      <div className="p-col">
+        <div className="p-formgroup-inline">
         {componentOptions.${attributes.id}Options.map((item) => (
-          <div className="p-field-radiobutton">
-          <RadioButton inputId={item} name="${attributes.id}" value={item} onChange={handleInputChange} checked={values.${attributes.id} === item} />
+          <div className="p-field-checkbox">
+            <RadioButton inputId={item} name="${attributes.id}" value={item} onChange={handleInputChange} checked={values.${attributes.id} === item} />
             <label className='p-radiobutton-label'>{item}</label> 
           </div>   
           ))}
-      </div>
+      </div>      
+    </div>
+  </div>
   </div>`;
   }
 
