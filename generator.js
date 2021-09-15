@@ -58,7 +58,7 @@ const generateJSXFile = async (masterLayout) => {
 
 const readExcelFile = () => {
   // .xlsx file path
-  const filePath = path.join(__dirname, "ui1.xlsx");
+  const filePath = path.join(__dirname, "react_template.xlsx");
 
   // parsing excel file
   var data = parser.parseXls2Json(filePath, {
@@ -81,7 +81,7 @@ const reactGenerator = async () => {
         const masterLayout = readExcelFile();
 
         projName = masterLayout.componentName;
-        layout = masterLayout.layout || 'horizontal'
+        layout = masterLayout.layout || 'row'
 
         fs.mkdir(`./output/${projName}`, (err) => {
           if (err) {
