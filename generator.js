@@ -50,7 +50,8 @@ const getIndexData = (masterLayout) => {
 
 const readExcelFile = () => {
   // .xlsx file path
-  const filePath = path.join(`${__dirname}/uploads`, 'CRF.xlsx');
+  const filePath = path.join(`${__dirname}/uploads`, "react_template.xlsx");
+
   // parsing excel file
   var data = parser.parseXls2Json(filePath, {
     isNested: true,
@@ -72,6 +73,7 @@ const reactGenerator = async () => {
         const masterLayout = readExcelFile();
 
         projName = masterLayout.componentName;
+        let layout = masterLayout.layout || 'row'
 
         fs.mkdir(`./output/${projName}`, (err) => {
           if (err) {

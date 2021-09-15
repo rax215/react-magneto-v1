@@ -5,7 +5,7 @@ const generateComponent = (masterLayout, components) => {
     (comp) => comp.type == "TextContainer"
   );
 
-  let label = labelComponent && labelComponent.length > 0 && `<div><h1>${labelComponent[0].attributes.label}</h1></div>`
+  let label = labelComponent && labelComponent.length > 0 ? `<div><h1>${labelComponent[0].attributes.label}</h1></div>`:''
   
   let optList = masterLayout.componentList.filter(
     (comp) =>
@@ -18,13 +18,13 @@ const generateComponent = (masterLayout, components) => {
     (comp) => comp.type == "Chart"
   );
 
-  let tableDataApi = masterLayout.componentList.filter(
+  let tableCompList = masterLayout.componentList.filter(
     (comp) => comp.type == "Table"
   );
 
   let componentOptions = {},
     initialValues = {},
-    chartData = "";
+    chartData = "", tableData = "";
 
   optList.forEach((comp) => {
     if(comp.type === 'CheckBox')
@@ -57,6 +57,19 @@ const generateComponent = (masterLayout, components) => {
       ...new Set(chartCmpList.map((comp) => comp.attributes.type)),
     ].join(", ")} } from 'react-chartjs-2';\n`;
   }
+  if(tableCompList && tableCompList.length > 0) {
+     tableData = `
+  const [tableColumns, setTableColumns] = useState([]);
+  const [tableRows, setTableRows] = useState([]);
+  useEffect(() => {
+    fetch("${tableCompList[0].attributes.api}")
+      .then((response) => response.json())
+      .then((data) => {
+        setTableColumns(data.columns);
+        setTableRows(data.rows);
+      });
+  }, []); `;
+  }
   var compArry = [...new Set(componentsArray.map((comp) => comp.compName))];
   if(masterLayout.library === 'primeReact') {
     compArry.forEach(function (comp) {
@@ -82,17 +95,8 @@ const generateComponent = (masterLayout, components) => {
  const ${name} = () => {
   let initialValues = ${JSON.stringify(initialValues)}
   const [values, setValues] = useState(initialValues);
-  const [tableColumns, setTableColumns] = useState([]);
-  const [tableRows, setTableRows] = useState([]);
-  useEffect(() => {
-    fetch("${tableDataApi[0].attributes.api}")
-      .then((response) => response.json())
-      .then((data) => {
-        setTableColumns(data.columns);
-        setTableRows(data.rows);
-      });
-  }, []); 
-  
+  ${tableData}
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setValues({ ...values, [name]: value });
@@ -107,7 +111,7 @@ const generateComponent = (masterLayout, components) => {
   return (
     <div>
     ${label}
-    <div classname="parent">        
+    <div className="parent">        
         ${components.map((comp) => `${comp.jsx}`).join("\n")}
     </div>
     </div>
