@@ -11,7 +11,7 @@ const getTable = (attributes) => {
         </DataTable>
     </div>
   </div>`;
-  } else if (attributes.library === "materialUi") {
+  } else if (attributes.library === "materialUI") {
     component = `<TableContainer style={{maxHeight: 440}}>
   <Table ${attributes.stickyHeader ? "stickyHeader" : ""} >
     <TableHead>
