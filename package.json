@@ -5,13 +5,20 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon -w . -w .env ./server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "adm-zip": "^0.5.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "morgan": "^1.10.0",
     "simple-excel-to-json": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
   }
 }
