@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
 
 router.get('/template', (req, res) => {
   try {
-    res.download(`${__dirname}/../uploads/react_template.xlsx`);
+    res.download(`${__dirname}/../react_template.xlsx`);
   } catch (error) {
     res.status(500).send(error);
   }
