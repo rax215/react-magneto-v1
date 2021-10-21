@@ -5,7 +5,7 @@ const generateComponent = (masterLayout, components) => {
     (comp) => comp.type == "TextContainer"
   );
 
-  let label = labelComponent && labelComponent.length > 0 ? `<div><h1>${labelComponent[0].attributes.label}</h1></div>`:''
+  let label = labelComponent && labelComponent.length > 0 ? `<div><h2>${labelComponent[0].attributes.label}</h2></div>`:''
   
   let optList = masterLayout.componentList.filter(
     (comp) =>
@@ -110,10 +110,17 @@ const generateComponent = (masterLayout, components) => {
   };
   return (
     <div>
-    ${label}
-    <div className="parent">        
-        ${components.map((comp) => `${comp.jsx}`).join("\n")}
-    </div>
+      <div className="banner">
+        <div className="banner-text">
+          <h1 className="appname">${name}</h1>
+        </div>
+      </div>
+      <Card className='card'>
+        ${label}
+        <div className="parent">        
+            ${components.map((comp) => `${comp.jsx}`).join("\n")}
+        </div>
+      </Card>  
     </div>
   )
 }

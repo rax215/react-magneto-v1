@@ -12,6 +12,7 @@ const generateComponent = (componentName, componentData,componentGenerator) => {
 const generateJSX = async (masterLayout) => {
   return new Promise((resolve, reject) => {
     let componentData = [];
+    componentData.push({ compName: "Card", jsx: "" });
     let library = masterLayout.library || "materialUI";
 
     if (library === "materialUI") {      
@@ -83,7 +84,7 @@ const generateJSX = async (masterLayout) => {
         }
       });
     } else if (library === "primeReact") {
-      
+      componentData.push({ compName: "Card", jsx: "" });
       masterLayout.componentList.forEach((component) => {
         if (component.type === "TextInput") {
           componentData.push({

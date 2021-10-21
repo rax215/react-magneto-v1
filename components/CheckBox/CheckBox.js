@@ -6,7 +6,7 @@ const getCheckBox = (attributes) => {
   if (attributes.library === "materialUI") {
     component = `<div className="${className}">
             ${FormLabel.getFormLebel(attributes)}              
-                    <FormGroup row="true">
+                    <FormGroup row="true" className="checkMargin">
                         {componentOptions.${
                           attributes.id
                         }Options.map((item) => (
