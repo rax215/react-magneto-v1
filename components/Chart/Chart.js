@@ -4,6 +4,7 @@ const getChart = (attributes) => {
   let type = attributes.type, chart, width, height
   width = attributes.width ? attributes.width : 500
   height = attributes.height ? attributes.height : 300
+  let className = attributes.className || "child";
     switch (type) {
         case 'Bar':
             chart = `<Bar data={BarChartData}  options={BarChartOptions}/>`
@@ -24,7 +25,7 @@ const getChart = (attributes) => {
     
     }  
     return (
-      `<div style={{width:${width}, height:${height} }}>${chart}</div>`    
+      `<div style={{width:${width}, height:${height} }} className="${className}">${chart}</div>`    
     )
 }
 

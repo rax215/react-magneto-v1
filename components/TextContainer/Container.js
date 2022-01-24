@@ -2,12 +2,12 @@ const getTextContainer = (attributes) => {
   let component = ''
     if(attributes.library === 'materialUI') {
   component = `<div> 
-      <h1>${attributes.label}</h1>  
+      <h2>${attributes.label}</h2>  
       </div> 
         `;
       } else if(attributes.library === 'primeReact') {
         component = `<div>
-        <h1>${attributes.label}</h1>
+        <h2>${attributes.label}</h2>
         </div>`  
       }
  return `${component}`

@@ -15,7 +15,10 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.1",
+<<<<<<< HEAD
     "fs-extra": "^10.0.0",
+=======
+>>>>>>> bc595f06f7d67c132833100b75d0d738ffb7393a
     "morgan": "^1.10.0",
     "simple-excel-to-json": "^2.3.0"
   },
