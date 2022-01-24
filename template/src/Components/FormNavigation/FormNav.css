@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+.tabs {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  text-align: center;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+.tabItem {
+  background-color: white;
+  color: #0a3b7b;
+  margin: 0 10px;
+  padding: 18px 0px;
+  border-radius: 15px;
+  display: block;
+  width: 25%;
+}
+.tabItem p {
+  margin: 0;
+}

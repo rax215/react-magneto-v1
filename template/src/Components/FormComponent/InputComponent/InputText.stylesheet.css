@@ -1,0 +1,25 @@
+.input-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.input-box p {
+  color: white;
+}
+input[type="text"],
+input[type="date"],
+input[type="number"],
+input[type="email"] {
+  padding: 0.4rem 0.8rem;
+  border-radius: 1rem;
+  border-width: thin;
+  outline: none;
+  margin: 0.5rem;
+  width: 50%;
+}
+
+@media (max-width: 768px) {
+  .input-box {
+    width: 100%;
+  }
+}

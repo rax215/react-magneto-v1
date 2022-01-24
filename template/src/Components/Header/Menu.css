@@ -1,0 +1,85 @@
+#menuToggle {
+  display: block;
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  z-index: 1;
+  -webkit-user-select: none;
+  user-select: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: WHITE;
+  border-width: thin;
+}
+#menuToggle span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  margin-bottom: 5px;
+  position: relative;
+  background: #cdcdcd;
+  border-radius: 3px;
+  z-index: 1;
+  transform-origin: 4px 0px;
+  transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+    background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+  left: 9px;
+  top: 14px;
+}
+#menuToggle input {
+  display: inline-block;
+  width: 40px;
+  height: 32px;
+  position: absolute;
+  top: -7px;
+  left: -5px;
+
+  cursor: pointer;
+
+  opacity: 0; /* hide this */
+  z-index: 2; /* and place it over the hamburger */
+
+  -webkit-touch-callout: none;
+}
+#menuToggle:hover {
+  cursor: pointer;
+}
+#menuToggle span:first-child {
+  transform-origin: 0% 0%;
+}
+
+#menuToggle span:nth-last-child(2) {
+  transform-origin: 0% 100%;
+}
+
+#menuToggle:hover span {
+  opacity: 1;
+  transform: rotate(90deg) translate(-15px, -8px);
+  background: #cdcdcd;
+}
+
+#menuToggle input:checked ~ span {
+  opacity: 1;
+  transform: rotate(90deg) translate(-15px, -8px);
+  background: #ffffff;
+}
+
+#menuToggle:hover span:nth-last-child(3) {
+  opacity: 1;
+  transform: rotate(90deg) translate(-1px, -14px);
+}
+#menuToggle input:checked ~ span:nth-last-child(3) {
+  opacity: 1;
+  transform: rotate(90deg) translate(-1px, -14px);
+}
+
+#menuToggle:hover span:nth-last-child(2) {
+  opacity: 1;
+  transform: rotate(90deg) translate(-14px, -4px);
+}
+#menuToggle input:checked ~ span:nth-last-child(2) {
+  opacity: 1;
+  transform: rotate(90deg) translate(-14px, -4px);
+}
