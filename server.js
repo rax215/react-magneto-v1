@@ -19,8 +19,4 @@ app.use(morgan('dev'));
 
 app.use(process.env.API, router);
 
-<<<<<<< HEAD
 app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
-=======
-app.listen(process.env.PORT, () => console.log(`Server started on port ${process.env.PORT}`));
->>>>>>> bc595f06f7d67c132833100b75d0d738ffb7393a
