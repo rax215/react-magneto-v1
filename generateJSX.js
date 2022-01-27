@@ -3,20 +3,21 @@ const generateJSX = async (masterLayout, page, pageIndex) => {
   return new Promise((resolve, reject) => {
     let jsxCode = `import React from "react";
     import Layout from "../Components/PageLayout/Layout";`;
-    let buttonInfo = []
+    let buttonInfo = [], eventHandlingJsx ='';
     let optList = page.componentList.filter(
       (comp) =>
-        comp.type == "Radio" ||
-        comp.type == "DropDown" ||
+        comp.type == "RadioInputButton" ||
+        comp.type == "SelectInputBox" ||
         comp.type == "CheckBox"
     );
+    
     let initialValues = {}, componentOptions = {};
     optList.forEach((comp) => {
       if(comp.type === 'CheckBox')
         initialValues[comp.attributes.id] = [];
       else
         initialValues[comp.attributes.id] = "";
-        //if(comp.type === 'DropDwon') {
+        //if(comp.type === 'SelectInputBox') {
           if(typeof comp.attributes.options == "string" ) {
             let options = []
             comp.attributes.options.split(",").forEach((option, index) => {
@@ -26,6 +27,16 @@ const generateJSX = async (masterLayout, page, pageIndex) => {
           }
     //}
     });
+    if(optList && optList.length>0) {
+      eventHandlingJsx = `
+      const handleChangeSelect = (param) => {
+        console.log(param.getAttribute("value"));
+      };
+      const handleChange = (e) => {
+        console.log(e.target.value);
+      };
+      const componentOptions = JSON.parse(${JSON.stringify(componentOptions)})`
+    }
 let Imagcmp = page.componentList.find((comp) => comp.type == 'Image')
 if (Imagcmp) {
   let imagUrl = Imagcmp.attributes.url
@@ -41,15 +52,15 @@ if (Imagcmp) {
           jsxCode +
           `\n import InputText from "../Components/FormComponent/InputComponent/InputText";`;
       }
-      if (component == "DropDown") {
+      if (component == "SelectInputBox") {
         jsxCode =
           jsxCode +
           `\n import SelectInputBox from "../Components/FormComponent/SelectInputBox/SelectInputBox";`;
       }
-      if(component == "Radio") {
+      if(component == "RadioInputButton") {
         jsxCode =
           jsxCode +
-          `\n import SelectInputBox from "../Components/FormComponent/RadioInputButton/RadioInputButton";`;
+          `\n import RadioInputButton from "../Components/FormComponent/RadioInputButton/RadioInputButton";`;
       }
       if (component == "ButtonComponent") {
         jsxCode =
@@ -76,7 +87,7 @@ if (Imagcmp) {
             compMap.push({comName:'TextInput', cmpJsx: cmpJsx})
            }
        }
-       if(component.type == 'DropDown') {
+       if(component.type == 'SelectInputBox') {
         let cmpJsx = `<div className="input-box">
         <p>Select  ${component.attributes.label}</p>
         <SelectInputBox
@@ -84,26 +95,26 @@ if (Imagcmp) {
           options={componentOptions.${component.attributes.id}Options}
         />
       </div> `
-        compMap.push({comName:'DropDown', cmpJsx: cmpJsx})
+        compMap.push({comName:'SelectInputBox', cmpJsx: cmpJsx})
        }
        if(component.type == 'Radio') {
         let cmpJsx = `div className="input-box">
         <p>Select ${component.attributes.label} </p>
         <RadioInputButton radioList={componentOptions.${component.attributes.id}Options}/>
       </div> `
-        compMap.push({comName:'RadioButton', cmpJsx: cmpJsx})
+        compMap.push({comName:'RadioInputButton', cmpJsx: cmpJsx})
        }
     })
     let textContainer = page.componentList.find((comp) => comp.type == 'TextContainer')
    // jsxCode=jsxCode + `\n const heading = ${textContainer.attributes.label}`
    const heading = textContainer ? `\n const heading = "${textContainer.attributes.label}"` : ''
     if (pageIndex != 0) {
-      buttonInfo.push({ label: "Back", path: masterLayout.pageNames[pageIndex - 1].pageName.replace(/\s/g, '')})
+      buttonInfo.push({ label: "Back", path: masterLayout.pages[pageIndex - 1].pageName.replace(/\s/g, '')})
     } 
-    if (pageIndex == 0 && masterLayout.pageNames.length > pageIndex + 1) {
-      buttonInfo.push({ label: "Continue", path: masterLayout.pageNames[pageIndex + 1].pageName.replace(/\s/g, '')})
+    if (pageIndex == 0 && masterLayout.pages.length > pageIndex + 1) {
+      buttonInfo.push({ label: "Continue", path: masterLayout.pages[pageIndex + 1].pageName.replace(/\s/g, '')})
     } 
-    if (masterLayout.pageNames.length == pageIndex + 1) {
+    if (masterLayout.pages.length == pageIndex + 1) {
       buttonInfo.push({ label: "Issue", path:"/"})
     }
     
@@ -112,15 +123,8 @@ if (Imagcmp) {
       jsxCode +
       `\n const ${page.pageName.replace(/\s/g, '')} = (props) => {
         \n ${heading}
-        const handleChangeSelect = (param) => {
-          console.log(param.getAttribute("value"));
-        };
-        const handleChange = (e) => {
-          console.log(e.target.value);
-        };
-        const componentOptions = JSON.parse(${JSON.stringify(componentOptions)})
-        const buttonInfo = JSON.parse(${JSON.stringify(buttonInfo)} )
-        `+`
+        \n ${eventHandlingJsx}
+       const buttonInfo = JSON.parse(${JSON.stringify(buttonInfo)} )
         return (
           <>
             <Layout
@@ -147,19 +151,21 @@ const generateRouteJSX = async (masterLayout) => {
     import { BrowserRouter as Switch, Routes, Route } from "react-router-dom";
     import NavBar from "./Components/NavBar/NavBar";
     import Home from "./views/Home";`
-    let routeNavjsx = ''
+    let routeNavjsx = '', navTabs = []
 
     masterLayout.pages.forEach((page) => {
-      routeImprtJsx = routeImprtJsx = `\n import ${page.pageName} from "./views/${page.pageName}"; 
+      navTabs.push(page.displayName);
+      routeImprtJsx = routeImprtJsx + `\n import ${page.pageName} from "./views/${page.pageName}"; 
       `
       routeNavjsx = routeNavjsx + `\n<Route exact path="/${page.pageName}" element={<${page.pageName}/>} />`
     })
     let routeJsx = `${routeImprtJsx}
     \n
     const PageNav = () => {
+      const formTabs = JSON.parse(${JSON.stringify(navTabs)})
       return (
         <>
-          <NavBar formTabs={navTabs}/>
+          <NavBar formTabs={formTabs}/>
           <Routes>
             <Route exact path="/" element={<Home/>} />
             \n${routeNavjsx}

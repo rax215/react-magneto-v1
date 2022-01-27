@@ -25,11 +25,11 @@ router.post('/masterPayload', async (req, res) => {
     });
     
     const zip = new AdmZip()   
-    zip.addLocalFolder(projDir, compName)
+    zip.addLocalFolder(__dirname, compName)
 
     const downloadName = 'download.zip'
     const data = zip.toBuffer();
-    zip.writeZip(projDir+ downloadName)
+    zip.writeZip(__dirname+ downloadName)
     
     res.set('Content-Type','application/octet-stream');
     res.set('Content-Disposition',`attachment; filename=${downloadName}`);

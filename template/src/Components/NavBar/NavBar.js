@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import ButtonComponent from "../FormComponent/Button/Button";
 import "./NavBar.css";
 
-const NavBar = () => {
+const NavBar = (formTabs) => {
 
   const location = useLocation();
 

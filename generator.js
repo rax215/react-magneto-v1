@@ -50,7 +50,7 @@ const reactAppGenerator = async (masterLayout) => {
         });
         generateRouteJSX(masterLayout).then((data) => {
           fs.writeFile(
-              `./output/${projName}/route.js`,
+              `./output/${projName}/src/route.js`,
             data,
             (err) => {
               // throws an error, you could also catch it here
