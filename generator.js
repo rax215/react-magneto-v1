@@ -11,14 +11,14 @@ const generateJSXCode = async (masterLayout, page, pageIndex) => {
 
 const reactAppGenerator = async (masterLayout) => {
   return new Promise((resolve, reject) => {
-    let projName = masterLayout.appName
+    let projName = masterLayout.appName;
     const directory = `./output`;
     fs.mkdir(directory, (err) => {
       if (err) {
         console.log('error while creating project directory -1');
       } else {
-        fs.mkdirSync(`./output/${projName}`)
-        copyFiles('./template/base-app', `./output/${projName}`)
+        fs.mkdirSync(`./output/${projName}`);
+        copyFiles('./template/base-app', `./output/${projName}`);
         //generate package.json
         fs.readFile(`./output/${projName}/package.json`, 'utf8', (err, data) => {
           if (err) throw err;
@@ -34,52 +34,52 @@ const reactAppGenerator = async (masterLayout) => {
             fs.copyFile(`./template/Home.js`, `./output/${projName}/src/views/Home.js`, (err) => {
               if (err) throw err;
             });
-           
-        masterLayout.pages.forEach((page, pageIndex) => {
-          
-          generateJSXCode(masterLayout, page, pageIndex).then((data) => {
-            fs.writeFile(
-                `./output/${projName}/src/views/${page.pageName.replace(/\s/g, '')}.js`        ,
-              data,
-              (err) => {
-                // throws an error, you could also catch it here
-                if (err) throw err;
 
-                // the file was saved
-                console.log("jsx file contents written");
-                resolve();
-              }
-            );
-          });
+            masterLayout.pages.forEach((page, pageIndex) => {
+
+              generateJSXCode(masterLayout, page, pageIndex).then((data) => {
+                fs.writeFile(
+                  `./output/${projName}/src/views/${page.pageName.replace(/\s/g, '')}.js`,
+                  data,
+                  (err) => {
+                    // throws an error, you could also catch it here
+                    if (err) throw err;
+
+                    // the file was saved
+                    console.log("jsx file contents written");
+                    resolve();
+                  }
+                );
+              });
+            });
+            generateRouteJSX(masterLayout).then((data) => {
+              fs.writeFile(
+                `./output/${projName}/src/route.js`,
+                data,
+                (err) => {
+                  // throws an error, you could also catch it here
+                  if (err) throw err;
+
+                  // the file was saved
+                  console.log(" route jsx file contents written");
+                  resolve();
+                }
+              );
+            });
+          }
         });
-        generateRouteJSX(masterLayout).then((data) => {
-          fs.writeFile(
-              `./output/${projName}/src/route.js`,
-            data,
-            (err) => {
-              // throws an error, you could also catch it here
-              if (err) throw err;
-
-              // the file was saved
-              console.log(" route jsx file contents written");
-              resolve();
-            }
-          );
-        });
-      }
-      })
 
       }
-    })
-  })
-}
-    
- function copyFiles (source, dest) {
+    });
+  });
+};
+
+function copyFiles(source, dest) {
   try {
-    fs.copySync(source, dest)
-    console.log('success!')
+    fs.copySync(source, dest);
+    console.log('success!');
   } catch (err) {
-    console.error(err)
+    console.error(err);
   }
 }
 

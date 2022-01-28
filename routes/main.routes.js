@@ -13,31 +13,32 @@ router.get('/', (req, res) => {
 
 router.post('/generateReactApp', async (req, res) => {
   const masterLayout = await commonUtil.createMasterJson(req.body);
-    if (fs.existsSync('./output')) {
-      await fsprom.rmdir('./output', { recursive: true }).then(() => console.log('directory removed!'))
-    }
-    await generator.reactAppGenerator(masterLayout)
-    const projDir = path.join(__dirname, '..', 'output');
+  if (fs.existsSync('./output')) {
+    await fsprom.rm('./output', { recursive: true }).then(() => console.log('directory removed!'));
+  }
+  await generator.reactAppGenerator(masterLayout);
+  const projDir = path.join(__dirname, '..', 'output');
 
-    let compName = ''
-    fs.readdir(projDir, (err, files) => {
-        files.forEach(file => {
-          compName = file;
-        });
+  let compName = '';
+  fs.readdir(projDir, (err, files) => {
+    files.forEach(file => {
+      compName = file;
     });
-    
-    const zip = new AdmZip()   
-    zip.addLocalFolder(projDir, compName)
+  });
 
-    const downloadName = 'download.zip'
-    const data = zip.toBuffer();
-    zip.writeZip(projDir+ downloadName)
-    
-    res.set('Content-Type','application/octet-stream');
-    res.set('Content-Disposition',`attachment; filename=${downloadName}`);
-    res.set('Content-Length',data.length);
-    res.send(data);
+  const zip = new AdmZip();
+  zip.addLocalFolder(projDir, compName);
+
+  const downloadName = 'download.zip';
+  const data = zip.toBuffer();
+  zip.writeZip(projDir + downloadName);
+
+  res.set('Content-Type', 'application/octet-stream');
+  res.set('Content-Disposition', `attachment; filename=${downloadName}`);
+  res.set('Content-Length', data.length);
+  res.status(200).send(data);
 });
+
 router.get('/template', (req, res) => {
   try {
     res.download(`${__dirname}/../template/react_template.xlsx`);

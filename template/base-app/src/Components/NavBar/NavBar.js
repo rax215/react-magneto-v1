@@ -1,10 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import ButtonComponent from "../FormComponent/Button/Button";
 import "./NavBar.css";
 
-const NavBar = (formTabs) => {
+const NavBar = () => {
+
+  const [formTabs] = useState(["Customer Info", "Residence Info", "Vehicle Info", "Driver Info", "Coverages", "Quote"]);
 
   const location = useLocation();
 
@@ -12,15 +14,6 @@ const NavBar = (formTabs) => {
       console.log("location---",location)
   })
 
-
-  const formTabs = [
-    "Customer Info",
-    "Residence Info",
-    "Vehicle Info",
-    "Driver Info",
-    "Coverages",
-    "Quote"
-  ];
   const convertFormLink = (str) => {
     return (
       "/" +

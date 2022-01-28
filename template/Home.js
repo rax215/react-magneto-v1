@@ -1,12 +1,11 @@
 import React from "react";
-import ButtonComponent from "../Components/FormComponent/Button/Button";
 import Welcome from "../Components/Welcome/Welcome";
 import getQuote from "../Images/getQuote.png";
 import car from "../Images/car.png";
 import arrow from "../Images/arrow.png";
 import arrowb from "../Images/arrow-blue.png";
 
-const Home = (props) => {
+const Home = () => {
   const logo = { img: getQuote, alt: "Get Quote" };
   const lowerText = "Get Started";
   const pointer = { normal: arrow, active: arrowb };

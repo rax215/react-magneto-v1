@@ -4,8 +4,8 @@ let widgetComponentMap = {
   "ButtonComponent": "ButtonComponent",
   "RadioInputButton": "RadioInputButton",
   "Text": "Text",
-  "Image": "Image" 
-}
+  "Image": "Image"
+};
 
 const countKeys = (obj) => {
   return Object.keys(obj).length;
@@ -22,30 +22,30 @@ const createComponentLayout = (obj, metadata) => {
       config[key] = obj[`value${i}`];
     }
   }
-  config.library = metadata.library
+  config.library = metadata.library;
   comp.attributes = config;
   return comp;
 };
 
 const captureMetadata = (obj) => {
   let config = {};
-  config.name = obj.value
+  config.name = obj.value;
 
   for (let i = 1; i < countKeys(obj); i++) {
     if (!isEmpty(obj[`value${i}`])) {
       let key = obj[`property${i}`];
       config[key] = obj[`value${i}`];
     }
-  }  
+  }
   return config;
 };
 
 const createMasterLayout = (compArr) => {
   let masterLayout = {};
-  let metadata = captureMetadata(compArr[0])
-  masterLayout.componentName = metadata.name.replace(/\s/g,'')
-  masterLayout.library = metadata.library
-  masterLayout.layout = metadata.layout
+  let metadata = captureMetadata(compArr[0]);
+  masterLayout.componentName = metadata.name.replace(/\s/g, '');
+  masterLayout.library = metadata.library;
+  masterLayout.layout = metadata.layout;
 
   let layoutCompList = [];
   let componentList = compArr.splice(1);
@@ -53,7 +53,7 @@ const createMasterLayout = (compArr) => {
     layoutCompList.push(createComponentLayout(obj, metadata));
   });
   masterLayout.componentList = layoutCompList;
-  console.log(masterLayout)
+  console.log(masterLayout);
   return masterLayout;
 };
 
@@ -116,7 +116,7 @@ async function convertMasterPayload(masterPayload) {
       null,
       2
     );
-    console.log(jsonStringPayload)
+    console.log(jsonStringPayload);
     jsonStringPayload = jsonStringPayload.replaceAll("page", "pageName");
     jsonStringPayload = jsonStringPayload.replaceAll(
       "widgets",
@@ -132,33 +132,33 @@ async function convertMasterPayload(masterPayload) {
 }
 
 const createPage = (pageData) => {
-  let page = {}
-  page.pageName = pageData.page
-  page.displayName = pageData.displayname
-  page.componentList = []
+  let page = {};
+  page.pageName = pageData.page;
+  page.displayName = pageData.displayname;
+  page.componentList = [];
   pageData.widgets.forEach(widget => {
-    let component = {}
-    component.type = widgetComponentMap[widget.widget]
-    component.attributes = {}
-    component.attributes.label = widget.configuration.find(item => item.Property == "label").Value
-    component.attributes.id = ''
-    component.attributes.name = ''
+    let component = {};
+    component.type = widgetComponentMap[widget.widget];
+    component.attributes = {};
+    component.attributes.label = widget.configuration.find(item => item.Property == "label").Value;
+    component.attributes.id = '';
+    component.attributes.name = '';
     component.attributes.options = widget.configuration.find(item => item.Property == "optionList") ? widget.configuration.find(item => item.Property == "optionList").Value
-     : widget.configuration.find(item => item.Property == "radioList") ? widget.configuration.find(item => item.Property == "radioList").Value : ''
-    page.componentList.push(component)
-  })
-  return page
-}
+      : widget.configuration.find(item => item.Property == "radioList") ? widget.configuration.find(item => item.Property == "radioList").Value : '';
+    page.componentList.push(component);
+  });
+  return page;
+};
 
 const createMasterJson = async (payload) => {
-  let masterJson = {}
-  masterJson.appName = payload.appName
-  masterJson.pages = []
+  let masterJson = {};
+  masterJson.appName = payload.appName;
+  masterJson.pages = [];
   payload.data.forEach(pageData => {
-    let page = createPage(pageData)
-    masterJson.pages.push(page)
-  })
-  return masterJson
-}
+    let page = createPage(pageData);
+    masterJson.pages.push(page);
+  });
+  return masterJson;
+};
 
 module.exports = { createMasterLayout, convertMasterPayload, createMasterJson };
