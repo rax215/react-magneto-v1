@@ -2,7 +2,9 @@ let widgetComponentMap = {
   "InputText": "InputText",
   "DropdownButton": "SelectInputBox",
   "ButtonComponent": "ButtonComponent",
-  "RadioInputButton": "RadioInputButton"
+  "RadioInputButton": "RadioInputButton",
+  "Text": "Text",
+  "Image": "Image" 
 }
 
 const countKeys = (obj) => {

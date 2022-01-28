@@ -1,6 +1,7 @@
 const { generateJSX, generateRouteJSX } = require("./generateJSX");
 const fs = require("fs-extra");
 const path = require("path");
+const { copyFileSync } = require("fs");
 
 
 const generateJSXCode = async (masterLayout, page, pageIndex) => {
@@ -17,7 +18,7 @@ const reactAppGenerator = async (masterLayout) => {
         console.log('error while creating project directory -1');
       } else {
         fs.mkdirSync(`./output/${projName}`)
-        copyFiles('./template', `./output/${projName}`)
+        copyFiles('./template/base-app', `./output/${projName}`)
         //generate package.json
         fs.readFile(`./output/${projName}/package.json`, 'utf8', (err, data) => {
           if (err) throw err;
@@ -30,7 +31,10 @@ const reactAppGenerator = async (masterLayout) => {
           if (err) {
             console.log("error while creating views directory -1");
           } else {
-            let routesJsx='';
+            fs.copyFile(`./template/Home.js`, `./output/${projName}/src/views/Home.js`, (err) => {
+              if (err) throw err;
+            });
+           
         masterLayout.pages.forEach((page, pageIndex) => {
           
           generateJSXCode(masterLayout, page, pageIndex).then((data) => {

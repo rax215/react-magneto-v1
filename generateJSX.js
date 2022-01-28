@@ -38,16 +38,13 @@ const generateJSX = async (masterLayout, page, pageIndex) => {
       const componentOptions = JSON.parse(${JSON.stringify(componentOptions)})`
     }
 let Imagcmp = page.componentList.find((comp) => comp.type == 'Image')
-if (Imagcmp) {
-  let imagUrl = Imagcmp.attributes.url
-    ? '../Images/'+Imagcmp.attributes.url
-    : "../Images/Humaaans.png";
-  jsxCode = jsxCode + `\n import image from "${imagUrl}";`;
-}
+let imagUrl = Imagcmp && Imagcmp.attributes.alt ? "../Images/"+Imagcmp.attributes.alt : "../Images/Humaaans.png"
+
+jsxCode = jsxCode + `\n import image from "${imagUrl}";`;
     var compArry = [...new Set(page.componentList.map((comp) => comp.type))];
     compArry.forEach((component) => {
       
-      if (component == "TextInput") {
+      if (component == "InputText") {
         jsxCode =
           jsxCode +
           `\n import InputText from "../Components/FormComponent/InputComponent/InputText";`;
@@ -70,21 +67,21 @@ if (Imagcmp) {
     });
     let compMap =[];
      page.componentList.forEach((component, index) => {
-       if(component.type == 'TextInput') {
+       if(component.type == 'InputText') {
          if(component.attributes.type == 'date') {
            let cmpJsx = `<InputText type='date' label="${component.attributes.label}"  />`
-           compMap.push({comName:'TextInput', cmpJsx: cmpJsx})
+           compMap.push({comName:'InputText', cmpJsx: cmpJsx})
           }
           if(component.attributes.type == 'number') {
             let cmpJsx = `<InputText type='number' label="${component.attributes.label}"  />`
-            compMap.push({comName:'TextInput', cmpJsx: cmpJsx})
+            compMap.push({comName:'InputText', cmpJsx: cmpJsx})
            }
            if(component.attributes.type == 'email') {
             let cmpJsx = `<InputText type='email' label="${component.attributes.label}"  />`
-            compMap.push({comName:'TextInput', cmpJsx: cmpJsx})
+            compMap.push({comName:'InputText', cmpJsx: cmpJsx})
            }else {
             let cmpJsx = `<InputText type='text' label="${component.attributes.label}" />`
-            compMap.push({comName:'TextInput', cmpJsx: cmpJsx})
+            compMap.push({comName:'InputText', cmpJsx: cmpJsx})
            }
        }
        if(component.type == 'SelectInputBox') {
@@ -105,9 +102,9 @@ if (Imagcmp) {
         compMap.push({comName:'RadioInputButton', cmpJsx: cmpJsx})
        }
     })
-    let textContainer = page.componentList.find((comp) => comp.type == 'TextContainer')
+    let textContainer = page.componentList.find((comp) => comp.type == 'Text')
    // jsxCode=jsxCode + `\n const heading = ${textContainer.attributes.label}`
-   const heading = textContainer ? `\n const heading = "${textContainer.attributes.label}"` : ''
+   const heading = textContainer ? `\n const heading = "${textContainer.attributes.label}"` : `\n const heading =""`
     if (pageIndex != 0) {
       buttonInfo.push({ label: "Back", path: masterLayout.pages[pageIndex - 1].pageName.replace(/\s/g, '')})
     } 
@@ -147,7 +144,6 @@ if (Imagcmp) {
 const generateRouteJSX = async (masterLayout) => {
   return new Promise((resolve, reject) => {
     let routeImprtJsx = `import React from "react";
-    import { BrowserRouter as Switch, Routes, Route } from "react-router-dom";
     import { BrowserRouter as Switch, Routes, Route } from "react-router-dom";
     import NavBar from "./Components/NavBar/NavBar";
     import Home from "./views/Home";`
