@@ -10,9 +10,9 @@
   flex: 50%;
 }
 .layout-col-left img {
-  width: 95%;
-  height: 95%;
-  object-fit: contain;
+  margin-top: 5%;
+  width: 40%;
+  height: 70%;
 }
 .layout-col-right {
   flex: 50%;
