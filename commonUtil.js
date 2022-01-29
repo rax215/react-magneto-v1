@@ -4,6 +4,7 @@ let widgetComponentMap = {
   "ButtonComponent": "ButtonComponent",
   "RadioInputButton": "RadioInputButton",
   "Text": "Text",
+  "TextContainer": "TextContainer",
   "Image": "Image"
 };
 
@@ -140,11 +141,12 @@ const createPage = (pageData) => {
     let component = {};
     component.type = widgetComponentMap[widget.widget];
     component.attributes = {};
-    component.attributes.label = widget.configuration.find(item => item.Property == "label").Value;
+    component.attributes.label = widget.configuration.find(item => item.Property == "label") ? widget.configuration.find(item => item.Property == "label").Value: ''
     component.attributes.id = '';
     component.attributes.name = '';
     component.attributes.options = widget.configuration.find(item => item.Property == "optionList") ? widget.configuration.find(item => item.Property == "optionList").Value
       : widget.configuration.find(item => item.Property == "radioList") ? widget.configuration.find(item => item.Property == "radioList").Value : '';
+      component.attributes.alt = widget.configuration.find(item => item.Property == "alt") ? widget.configuration.find(item => item.Property == "alt").Value: ''
     page.componentList.push(component);
   });
   return page;

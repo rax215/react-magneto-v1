@@ -59,11 +59,7 @@ const generateJSX = async (masterLayout, page, pageIndex) => {
           jsxCode +
           `\n import RadioInputButton from "../Components/FormComponent/RadioInputButton/RadioInputButton";`;
       }
-      if (component == "ButtonComponent") {
-        jsxCode =
-          jsxCode +
-          `\n import ButtonComponent from "../Components/FormComponent/Button/Button";`;
-      }
+      
     });
     let compMap = [];
     page.componentList.forEach((component, index) => {
@@ -84,6 +80,12 @@ const generateJSX = async (masterLayout, page, pageIndex) => {
           compMap.push({ comName: 'InputText', cmpJsx: cmpJsx });
         }
       }
+      if(component.type == 'TextContainer'){
+        let cmpJsx = `<div className="literal" style={{ color: 'white', textAlign: 'left' }}>
+        <p>${component.attributes.label}</p>
+      </div>`;
+        compMap.push({ comName: 'TextContainer', cmpJsx: cmpJsx });
+      }
       if (component.type == 'SelectInputBox') {
         let cmpJsx = `<div className="input-box">
         <p>${component.attributes.label}</p>
@@ -94,8 +96,8 @@ const generateJSX = async (masterLayout, page, pageIndex) => {
       </div> `;
         compMap.push({ comName: 'SelectInputBox', cmpJsx: cmpJsx });
       }
-      if (component.type == 'Radio') {
-        let cmpJsx = `div className="input-box">
+      if (component.type == 'RadioInputButton') {
+        let cmpJsx = `<div className="input-box">
         <p>${component.attributes.label} </p>
         <RadioInputButton radioList={componentOptions.${component.attributes.id}Options}/>
       </div> `;
