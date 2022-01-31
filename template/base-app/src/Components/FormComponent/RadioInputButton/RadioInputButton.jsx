@@ -17,7 +17,7 @@ export default function RadioInputButton(props) {
                 checked={checked}
                 value={value}
               />
-              {label}
+              <span className="labelTxt">{label}</span>
               <span className="checkmark"></span>
             </label>
           );

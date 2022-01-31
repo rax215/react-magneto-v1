@@ -3,8 +3,7 @@
   display: flex;
   text-align: center;
   flex-direction: row;
-  margin-top: 20px;
-  min-height: 500px;
+  margin-top: 0.4rem;
 }
 .layout-col-left {
   flex: 50%;
@@ -29,12 +28,10 @@
 .form-back {
   background-color: #0a3b7b;
   border-radius: 10px;
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 9px;
-  padding-bottom: 14px;
+  padding: 9px 25px;
   box-shadow: 3px 3px #888888;
   width: 84%;
+  overflow: scroll;
   }
 .form-back::-webkit-scrollbar {
   display: none;

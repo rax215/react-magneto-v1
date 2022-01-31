@@ -22,6 +22,10 @@
   user-select: none;
 }
 
+.labelTxt {
+  color: #fff;
+}
+
 /* Hide the browser's default radio button */
 .container input {
   position: absolute;
