@@ -106,7 +106,7 @@ const generateJSX = async (masterLayout, page, pageIndex) => {
     });
     let textContainer = page.componentList.find((comp) => comp.type == 'Text');
     // jsxCode=jsxCode + `\n const heading = ${textContainer.attributes.label}`
-    const heading = textContainer ? `\n const heading = "${textContainer.attributes.label}"` : `\n const [heading, setHeading] = useState("");`;
+    const heading = textContainer ? `\n const heading = "${textContainer.attributes.label}"` : `\n const [heading] = useState("Tell us a little about yourself...");`;
     if (pageIndex != 0) {
       buttonInfo.push({ label: "Back", path: masterLayout.pages[pageIndex - 1].pageName.replace(/\s/g, '') });
     }
@@ -147,7 +147,6 @@ const generateRouteJSX = async (masterLayout) => {
   return new Promise((resolve, reject) => {
     let routeImprtJsx = `import React from "react";
     import { Routes, Route } from "react-router-dom";
-    import NavBar from "./Components/NavBar/NavBar";
     import Home from "./views/Home";`;
     let routeNavjsx = '', navTabs = [];
 
@@ -163,7 +162,6 @@ const generateRouteJSX = async (masterLayout) => {
       
       return (
         <>
-          <NavBar />
           <Routes>
             <Route exact path="/" element={<Home/>} />
             \n${routeNavjsx}
