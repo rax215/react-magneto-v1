@@ -1,7 +1,8 @@
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
-import Home from "../src/views/Home";
+import Home from "./views/Home";
 import logo from "./logo.jpg";
+import PageNav from "./route";
 
 export default function App() {
   const help = "Need help?";
@@ -14,6 +15,7 @@ export default function App() {
     return (
       <>
         <Header logo={logo} help={help} login={login} />
+        <PageNav />
         <Footer />
       </>
     );
