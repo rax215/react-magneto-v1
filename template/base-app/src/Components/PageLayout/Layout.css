@@ -1,23 +1,17 @@
 .parent-row {
-  width: 100%;
   display: flex;
   text-align: center;
   flex-direction: row;
-  margin-top: 0.4rem;
+  min-height: calc(100vh - 12rem);
 }
 .layout-col-left {
   flex: 50%;
 }
 .layout-col-left img {
-  margin-top: 5%;
-  width: 40%;
-  height: 70%;
+  height: 30rem;
 }
 .layout-col-right {
   flex: 50%;
-  margin-top: 15px;
-  /* background-color: #0a3b7b;
-  border-radius: 8px; */
 }
 .continue-btn {
   margin: 12px 0px;
@@ -32,6 +26,7 @@
   box-shadow: 3px 3px #888888;
   width: 84%;
   overflow: scroll;
+  height: 20rem;
   }
 .form-back::-webkit-scrollbar {
   display: none;

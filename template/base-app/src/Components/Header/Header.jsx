@@ -1,37 +1,35 @@
 import React from "react";
-import PageNav from "../../route";
 import "./Header.css";
 import Menu from "./Menu";
+import NavBar from "../NavBar/NavBar";
 
 const Header = ({ logo, help, login, navTabs }) => {
   return (
-    <div className="hed-container">
-      <div className="header">
-        <div className="rowfirstdiv">
-          {logo && (
-            <a href="/" className="logo">
-              <img src={logo} alt="Get Quote" />
+    <div className="header">
+      <div className="rowfirstdiv">
+        {logo && (
+          <a href="/" className="logo">
+            <img src={logo} alt="Get Quote" />
+          </a>
+        )}
+        <div className="header-right">
+          {help && (
+            <a className="active" href="#">
+              {help}
             </a>
           )}
-          <div className="header-right">
-            {help && (
-              <a className="active" href="#">
-                {help}
-              </a>
-            )}
-            {login && (
-              <a href="#">
-                <div className="login">{login}</div>
-              </a>
-            )}
+          {login && (
             <a href="#">
-              <Menu />
+              <div className="login">{login}</div>
             </a>
-          </div>
+          )}
+          <a href="#">
+            <Menu />
+          </a>
         </div>
-        <div className="rowseconddiv">
-          <PageNav />
-        </div>
+      </div>
+      <div className="rowseconddiv">
+        <NavBar />
       </div>
     </div>
   );

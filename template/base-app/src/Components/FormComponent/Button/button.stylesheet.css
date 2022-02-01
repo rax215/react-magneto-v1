@@ -13,7 +13,7 @@ button:hover {
   background-color: white;
   color: #0a3b7b;
   transition: 0.5s;
-  box-shadow: 0.1rem 0.2rem lightgray;
+  box-shadow: none;
 }
 
 .navButton {
@@ -23,10 +23,8 @@ button:hover {
   text-decoration: none;
   border: none;
   background: none;
-  padding: 0;
   padding: 8px 20px;
   border-radius: 15px;
-  font-weight: 300;
   border-color: white;
   box-shadow: none;
   font-weight: 300;
