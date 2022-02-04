@@ -2,8 +2,9 @@ let widgetComponentMap = {
   "InputText": "InputText",
   "DropdownButton": "SelectInputBox",
   "ButtonComponent": "ButtonComponent",
-  "RadioInputButton": "RadioInputButton",
+  "RadioListTile": "RadioInputButton",
   "Text": "Text",
+  "TextField": "InputText",
   "TextContainer": "TextContainer",
   "Image": "Image"
 };
@@ -101,60 +102,43 @@ function updatePayloadAttributes(payload) {
     resolve(payload);
   });
 }
-/**
- * Converts masterPayload to magneto payload
- * @param {object} masterPayload - payload that is received from a different api
- */
-async function convertMasterPayload(masterPayload) {
-  masterPayload = await updatePayloadAttributes(masterPayload);
-
-  return new Promise((resolve) => {
-    let jsonStringPayload = JSON.stringify(
-      {
-        componentName: "DemoApp",
-        pages: [...masterPayload.data]
-      },
-      null,
-      2
-    );
-    console.log(jsonStringPayload);
-    jsonStringPayload = jsonStringPayload.replaceAll("page", "pageName");
-    jsonStringPayload = jsonStringPayload.replaceAll(
-      "widgets",
-      "componentList"
-    );
-    jsonStringPayload = jsonStringPayload.replaceAll("widget", "type");
-    jsonStringPayload = jsonStringPayload.replaceAll(
-      "configuration",
-      "attributes"
-    );
-    resolve(jsonStringPayload);
-  });
-}
 
 const createPage = (pageData) => {
   let page = {};
-  page.pageName = pageData.page;
-  page.displayName = pageData.displayname;
+
+  page.pageName = pageData.widgets.filter(widget => widget.configuration.id == "displayName")[0].configuration.textValue.split(' ').join('');
+  page.displayName = pageData.widgets.filter(widget => widget.configuration.id == "displayName")[0].configuration.textValue;
+  page.heading = pageData.widgets.filter(widget => widget.configuration.id == "heading")[0].configuration.textValue ?? '';
+
   page.componentList = [];
   pageData.widgets.forEach(widget => {
     let component = {};
-    component.type = widgetComponentMap[widget.widget];
+    component.type = widgetComponentMap[widget.widget] ?? '';
     component.attributes = {};
-    component.attributes.label = widget.configuration.find(item => item.Property == "label") ? widget.configuration.find(item => item.Property == "label").Value: ''
-    component.attributes.id = '';
-    component.attributes.name = '';
-    component.attributes.options = widget.configuration.find(item => item.Property == "optionList") ? widget.configuration.find(item => item.Property == "optionList").Value
-      : widget.configuration.find(item => item.Property == "radioList") ? widget.configuration.find(item => item.Property == "radioList").Value : '';
-      component.attributes.alt = widget.configuration.find(item => item.Property == "alt") ? widget.configuration.find(item => item.Property == "alt").Value: ''
+    component.attributes.label = widget.configuration.label ?? widget.configuration.textValue ?? widget.configuration.parameterName ?? '';
+    component.attributes.id = widget.configuration.id ?? widget.configuration.parameterName.toLowerCase().replaceAll(' ', '-') ?? '';
+    component.attributes.name = widget.configuration.id ?? widget.configuration.parameterName.toLowerCase().replaceAll(' ', '-') ?? '';
+    component.attributes.type = widget.configuration.dataType ?? (component.type === 'RadioInputButton' ? 'radio' : '');
+    component.attributes.options = (component.type === 'RadioInputButton' && pageData.widgets.filter(wid => wid.widget === 'RadioListTile').map(radioWidget => radioWidget.configuration.parameter).toString()) || (widget.children.length > 0 && widget.children.map(child => child.configuration.text).toString()) || '';
+
+    // component.attributes.alt = widget.configuration.find(item => item.Property == "alt") ? widget.configuration.find(item => item.Property == "alt").Value : ''
     page.componentList.push(component);
   });
+
+  // remove duplicate objects
+  page.componentList = page.componentList.filter(
+    (component, componentIndex, componentListArray) =>
+      componentIndex ===
+      componentListArray.findIndex((comp) => comp.attributes.id === component.attributes.id)
+  );
+
   return page;
 };
 
 const createMasterJson = async (payload) => {
+  payload = await updatePayloadAttributes(payload);
   let masterJson = {};
-  masterJson.appName = payload.appName;
+  masterJson.appName = payload.appName ?? 'GetQuote';
   masterJson.pages = [];
   payload.data.forEach(pageData => {
     let page = createPage(pageData);
@@ -163,4 +147,4 @@ const createMasterJson = async (payload) => {
   return masterJson;
 };
 
-module.exports = { createMasterLayout, convertMasterPayload, createMasterJson };
+module.exports = { createMasterLayout, createMasterJson };
