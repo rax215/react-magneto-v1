@@ -30,7 +30,7 @@ const NavBar = () => {
         {formTabs.map((tab, index) => (
           <span className="tabItem" key={index}>
             <ButtonComponent
-              className={`navButton ${location.pathname === convertFormLink(tab) ? "active-tab-cls" : ""}`}
+              className={`navButton ${location.pathname.toLowerCase() === convertFormLink(tab).toLowerCase() ? "active-tab-cls" : ""}`}
               label={tab}
               path={convertFormLink(tab)}
             />
