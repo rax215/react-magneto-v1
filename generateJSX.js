@@ -104,9 +104,8 @@ const generateJSX = async (masterLayout, page, pageIndex) => {
         compMap.push({ comName: 'RadioInputButton', cmpJsx: cmpJsx });
       }
     });
-    let textContainer = page.componentList.find((comp) => comp.type == 'Text');
-    // jsxCode=jsxCode + `\n const heading = ${textContainer.attributes.label}`
-    const heading = textContainer ? `\n const heading = "${textContainer.attributes.label}"` : `\n const [heading] = useState("Tell us a little about yourself...");`;
+    
+    const heading = page.heading ? `\n const heading = "${page.heading}"` :` \n const heading = '';`
     if (pageIndex != 0) {
       buttonInfo.push({ label: "Back", path: masterLayout.pages[pageIndex - 1].pageName.replace(/\s/g, '') });
     }
