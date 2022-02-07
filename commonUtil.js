@@ -1,12 +1,12 @@
 let widgetComponentMap = {
   "InputText": "InputText",
   "DropdownButton": "SelectInputBox",
-  "ButtonComponent": "ButtonComponent",
+  "RaisedButton": "ButtonComponent",
   "RadioListTile": "RadioInputButton",
   "Text": "Text",
   "TextField": "InputText",
   "TextContainer": "TextContainer",
-  "Image": "Image"
+  "Image": "ImageComponent"
 };
 
 const countKeys = (obj) => {
@@ -106,22 +106,34 @@ function updatePayloadAttributes(payload) {
 const createPage = (pageData) => {
   let page = {};
 
-  page.pageName = pageData.widgets.filter(widget => widget.configuration.id == "displayName")[0].configuration.textValue.split(' ').join('');
-  page.displayName = pageData.widgets.filter(widget => widget.configuration.id == "displayName")[0].configuration.textValue;
-  page.heading = pageData.widgets.filter(widget => widget.configuration.id == "heading")[0].configuration.textValue ?? '';
+  page.pageName = pageData.widgets.filter(widget => widget.configuration?.id == "displayName")[0]?.configuration.textValue.split(' ').join('') ?? pageData.page;
+  page.displayName = pageData.widgets.filter(widget => widget.configuration?.id == "displayName")[0]?.configuration.textValue ?? pageData.page;
+  page.heading = pageData.widgets.filter(widget => widget.configuration?.id == "heading")[0]?.configuration.textValue ?? '';
+  page.subHeading = pageData.widgets.filter(widget => widget.configuration?.id == "subHeading")[0]?.configuration.textValue ?? '';
 
   page.componentList = [];
   pageData.widgets.forEach(widget => {
     let component = {};
     component.type = widgetComponentMap[widget.widget] ?? '';
     component.attributes = {};
-    component.attributes.label = widget.configuration.label ?? widget.configuration.textValue ?? widget.configuration.parameterName ?? '';
-    component.attributes.id = widget.configuration.id ?? widget.configuration.parameterName.toLowerCase().replaceAll(' ', '-') ?? '';
-    component.attributes.name = widget.configuration.id ?? widget.configuration.parameterName.toLowerCase().replaceAll(' ', '-') ?? '';
-    component.attributes.type = widget.configuration.dataType ?? (component.type === 'RadioInputButton' ? 'radio' : '');
-    component.attributes.options = (component.type === 'RadioInputButton' && pageData.widgets.filter(wid => wid.widget === 'RadioListTile').map(radioWidget => radioWidget.configuration.parameter).toString()) || (widget.children.length > 0 && widget.children.map(child => child.configuration.text).toString()) || '';
+    component.attributes.label = widget.configuration?.label ?? widget.configuration?.textValue ?? widget.configuration?.parameterName ?? widget.configuration?.text ?? '';
+    component.attributes.id = widget.configuration?.id ?? widget.configuration.parameterName?.toLowerCase().replaceAll(' ', '-') ?? '';
+    component.attributes.name = widget.configuration?.id ?? widget.configuration.parameterName?.toLowerCase().replaceAll(' ', '-') ?? '';
+    component.attributes.type = widget.configuration?.dataType ?? (component.type === 'RadioInputButton' ? 'radio' : '');
 
-    // component.attributes.alt = widget.configuration.find(item => item.Property == "alt") ? widget.configuration.find(item => item.Property == "alt").Value : ''
+    if (component.type === 'SelectInputBox' || component.type === 'RadioInputButton') {
+      component.attributes.options = (component.type === 'RadioInputButton' && pageData.widgets.filter(wid => wid.widget === 'RadioListTile').map(radioWidget => radioWidget.configuration?.parameter)?.toString()) || (widget.children.length > 0 && widget.children.map(child => child.configuration?.text)?.toString()) || '';
+    }
+
+    if (component.type === 'ImageComponent') {
+      component.attributes.imgUrl = widget.configuration?.url;
+      component.attributes.imgAlt = widget.configuration?.alt;
+    }
+
+    if (component.type === 'ButtonComponent') {
+      component.attributes.path = `/${widget.configuration?.onPressed}`;
+    }
+
     page.componentList.push(component);
   });
 
@@ -129,7 +141,7 @@ const createPage = (pageData) => {
   page.componentList = page.componentList.filter(
     (component, componentIndex, componentListArray) =>
       componentIndex ===
-      componentListArray.findIndex((comp) => comp.attributes.id === component.attributes.id)
+      componentListArray.findIndex((comp) => comp.attributes?.id === component.attributes?.id)
   );
 
   return page;
