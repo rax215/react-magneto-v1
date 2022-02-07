@@ -37,8 +37,8 @@ const generateJSX = async (masterLayout, page, pageIndex) => {
       };
       const componentOptions = ${JSON.stringify(componentOptions)};`
     }
-    let Imagcmp = page.componentList.find((comp) => comp.type == 'Image');
-    let imagUrl = Imagcmp && Imagcmp.attributes.alt ? "../Images/" + Imagcmp.attributes.alt : "../Images/Humaaans.png";
+    let Imagcmp = page.componentList.find((comp) => comp.type == 'ImageComponent');
+    let imagUrl = Imagcmp && Imagcmp.attributes.imgUrl ? `${Imagcmp.attributes.imgUrl}` : "../Images/Humaaans.png";
 
     jsxCode = jsxCode + `\n import image from "${imagUrl}";`;
     var compArry = [...new Set(page.componentList.map((comp) => comp.type))];
@@ -80,12 +80,14 @@ const generateJSX = async (masterLayout, page, pageIndex) => {
           compMap.push({ comName: 'InputText', cmpJsx: cmpJsx });
         }
       }
-      if(component.type == 'TextContainer'){
+      if(masterLayout.pages.length == pageIndex + 1) {
+      if(component.type == 'Text'){
         let cmpJsx = `<div className="literal" style={{ color: 'white', textAlign: 'left' }}>
         <p>${component.attributes.label}</p>
       </div>`;
-        compMap.push({ comName: 'TextContainer', cmpJsx: cmpJsx });
+        compMap.push({ comName: 'Text', cmpJsx: cmpJsx });
       }
+    }
       if (component.type == 'SelectInputBox') {
         let cmpJsx = `<div className="input-box">
         <p>${component.attributes.label}</p>

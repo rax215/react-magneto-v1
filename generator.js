@@ -36,7 +36,7 @@ const reactAppGenerator = async (masterLayout) => {
             });
 
             masterLayout.pages.forEach((page, pageIndex) => {
-
+              if(page.pageName !== 'Home') {
               generateJSXCode(masterLayout, page, pageIndex).then((data) => {
                 fs.writeFile(
                   `./output/${projName}/src/views/${page.pageName.replace(/\s/g, '')}.js`,
@@ -51,6 +51,7 @@ const reactAppGenerator = async (masterLayout) => {
                   }
                 );
               });
+            }
             });
             generateRouteJSX(masterLayout).then((data) => {
               fs.writeFile(
