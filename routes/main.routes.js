@@ -1,12 +1,42 @@
 const express = require('express');
+const commonUtil = require('../commonUtil');
 var router = express.Router();
 const generator = require('../generator');
 const fsprom = require('fs').promises;
 const fs = require('fs');
+const path = require('path');
 const AdmZip = require('adm-zip');
 
 router.get('/', (req, res) => {
   res.status(200).send('this is magneto api');
+});
+
+router.post('/generateReactApp', async (req, res) => {
+  const masterLayout = await commonUtil.createMasterJson(req.body);
+  if (fs.existsSync('./output')) {
+    await fsprom.rm('./output', { recursive: true }).then(() => console.log('directory removed!'));
+  }
+  await generator.reactAppGenerator(masterLayout);
+  const projDir = path.join(__dirname, '..', 'output');
+
+  let compName = '';
+  fs.readdir(projDir, (err, files) => {
+    files.forEach(file => {
+      compName = file;
+    });
+  });
+
+  const zip = new AdmZip();
+  zip.addLocalFolder(projDir, compName);
+
+  const downloadName = 'download.zip';
+  const data = zip.toBuffer();
+  zip.writeZip(projDir + downloadName);
+
+  res.set('Content-Type', 'application/octet-stream');
+  res.set('Content-Disposition', `attachment; filename=${downloadName}`);
+  res.set('Content-Length', data.length);
+  res.status(200).send(data);
 });
 
 router.get('/template', (req, res) => {

@@ -1,0 +1,12 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+.display-flex-cls {
+  display: flex;
+}
+.input-label-cls {
+  padding: 5px;
+  margin-right: 50px;
+  min-width: 100px;
+}

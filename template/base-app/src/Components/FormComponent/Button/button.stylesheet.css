@@ -1,0 +1,32 @@
+button {
+  background-color: #0a3b7b;
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+  border-width: thin;
+  font-size: 1rem;
+  transition: 0.5s;
+  box-shadow: 0.1rem 0.2rem lightgray;
+}
+
+button:hover {
+  background-color: white;
+  color: #0a3b7b;
+  transition: 0.5s;
+  box-shadow: none;
+}
+
+.navButton {
+  background-color: white;
+  color: #0a3b7b;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  background: none;
+  padding: 8px 20px;
+  border-radius: 15px;
+  border-color: white;
+  box-shadow: none;
+  font-weight: 300;
+  justify-content: center;
+}

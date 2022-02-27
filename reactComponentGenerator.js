@@ -5,8 +5,8 @@ const generateComponent = (masterLayout, components) => {
     (comp) => comp.type == "TextContainer"
   );
 
-  let label = labelComponent && labelComponent.length > 0 ? `<div><h2>${labelComponent[0].attributes.label}</h2></div>`:''
-  
+  let label = labelComponent && labelComponent.length > 0 ? `<div><h2>${labelComponent[0].attributes.label}</h2></div>` : '';
+
   let optList = masterLayout.componentList.filter(
     (comp) =>
       comp.type == "RadioButton" ||
@@ -27,7 +27,7 @@ const generateComponent = (masterLayout, components) => {
     chartData = "", tableData = "";
 
   optList.forEach((comp) => {
-    if(comp.type === 'CheckBox')
+    if (comp.type === 'CheckBox')
       initialValues[comp.attributes.id] = [];
     else
       initialValues[comp.attributes.id] = "";
@@ -57,8 +57,8 @@ const generateComponent = (masterLayout, components) => {
       ...new Set(chartCmpList.map((comp) => comp.attributes.type)),
     ].join(", ")} } from 'react-chartjs-2';\n`;
   }
-  if(tableCompList && tableCompList.length > 0) {
-     tableData = `
+  if (tableCompList && tableCompList.length > 0) {
+    tableData = `
   const [tableColumns, setTableColumns] = useState([]);
   const [tableRows, setTableRows] = useState([]);
   useEffect(() => {
@@ -71,17 +71,17 @@ const generateComponent = (masterLayout, components) => {
   }, []); `;
   }
   var compArry = [...new Set(componentsArray.map((comp) => comp.compName))];
-  if(masterLayout.library === 'primeReact') {
+  if (masterLayout.library === 'primeReact') {
     compArry.forEach(function (comp) {
       const primeCompName = comp.toLowerCase();
       jsxCode =
         jsxCode + `import { ${comp} } from 'primereact/${primeCompName}';\n`;
     });
   }
-  if(masterLayout.library === 'materialUI') {
+  if (masterLayout.library === 'materialUI') {
     jsxCode = jsxCode + `import { ${[
       ...new Set(componentsArray.map((comp) => comp.compName)),
-    ].join(", ")} } from '@material-ui/core';`
+    ].join(", ")} } from '@material-ui/core';`;
   }
   jsxCode =
     jsxCode +
