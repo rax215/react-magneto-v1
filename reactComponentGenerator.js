@@ -1,6 +1,6 @@
 const generateComponent = (masterLayout, components) => {
   const name = masterLayout.componentName;
-  const layout = masterLayout.layout || 'horizontal';
+  const layout = masterLayout.layout || 'row';
   let labelComponent = masterLayout.componentList.filter(
     (comp) => comp.type == "TextContainer"
   );

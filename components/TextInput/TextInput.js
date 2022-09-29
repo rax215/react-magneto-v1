@@ -7,7 +7,9 @@ const getTextField = (attributes) => {
     component = `
     <div className="${className}">        
       ${FormLabel.getFormLebel(attributes)}       
-     <TextField id="${attributes.id}" className="formlabel" variant="outlined" />
+     <TextField id="${attributes.id}" className="formlabel" variant="outlined" inputProps={{
+      style: { paddingTop: '8px', paddingBottom: '8px' },
+    }}/>
     </div>`;
   } else if (attributes.library === 'primeReact') {
     component = `<div className="${attributes.className}">
