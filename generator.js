@@ -103,8 +103,16 @@ const reactGenerator = async () => {
                   if (err) throw err;
                 });
 
-                fs.copyFile(`${dirName}/template/App.js`, `./output/${projName}/src/App.js`, (err) => {
+                //fs.copyFile(`${dirName}/template/App.js`, `./output/${projName}/src/App.js`, (err) => {
+                //  if (err) throw err;
+                //});
+
+                fs.readFile(`${dirName}/template/App.js`, 'utf8', (err, data) => {
                   if (err) throw err;
+                  let pkg = data.replace(/<app-name>/g, projName);
+                  fs.writeFile(`./output/${projName}/src/App.js`, pkg, (err) => {
+                    if (err) throw err;
+                  });
                 });
 
                 // fs.copyFile(`${dirName}/template/index.js`, `./output/${projName}/src/index.js`, (err) => {
@@ -160,13 +168,13 @@ const reactGenerator = async () => {
                 // });
 
                 //generate Home.js
-                fs.readFile(`${dirName}/template/Home.js`, 'utf8', (err, data) => {
-                  if (err) throw err;
-                  let pkg = data.replace(/<app-name>/g, projName);
-                  fs.writeFile(`./output/${projName}/src/Home.js`, pkg, (err) => {
-                    if (err) throw err;
-                  });
-                });
+              //  fs.readFile(`${dirName}/template/Home.js`, 'utf8', (err, data) => {
+              //    if (err) throw err;
+              //    let pkg = data.replace(/<app-name>/g, projName);
+              //    fs.writeFile(`./output/${projName}/src/Home.js`, pkg, (err) => {
+              //      if (err) throw err;
+              //    });
+              //  });
 
                 // fs.copyFile(`${dirName}/template/package.json`, `./output/${projName}/package.json`, (err) => {
                 //   if (err) throw err;

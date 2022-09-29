@@ -24,6 +24,7 @@
   width: 250px;
   display: inline-block;
   margin: 15px 0;
+  font-size: 12px !important;
 }
 
 .chart{
