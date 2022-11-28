@@ -2,3 +2,4 @@ node_modules/
 output/
 *.zip
 .vscode/launch.json
+./package-lock.json

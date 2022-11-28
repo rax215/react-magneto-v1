@@ -38,7 +38,7 @@ const primeReactDependencies = `"primeflex": "^2.0.0",
 const getDependencies = (masterLayout) => {
   if (masterLayout.library === 'primeReact') {
     return primeReactDependencies;
-  } else if (masterLayout.library === 'materialUI') {
+  } else {
     return materialUIDependencies;
   }
 };
